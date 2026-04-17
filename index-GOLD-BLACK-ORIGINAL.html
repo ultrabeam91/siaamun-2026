@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SIA AMUN — FVRT GRL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Bebas+Neue&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --black:#0A0A0A;--off-black:#111111;--charcoal:#1C1C1C;--dark-gray:#2A2A2A;
+  --mid-gray:#555;--silver:#999;--light:#CCCCCC;--off-white:#F5F2EE;--white:#FFFFFF;
+  --gold:#C9A84C;--gold-light:#E8CB7A;--gold-dim:rgba(201,168,76,0.15);
+  --font-display:'Bebas Neue',sans-serif;
+  --font-serif:'Cormorant Garamond',serif;
+  --font-body:'Jost',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{background:var(--black);color:var(--off-white);font-family:var(--font-body);font-weight:300;cursor:none;overflow-x:hidden}
+.cursor{position:fixed;top:0;left:0;width:10px;height:10px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .2s,height .2s,background .2s}
+.cursor-ring{position:fixed;top:0;left:0;width:36px;height:36px;border:1px solid rgba(201,168,76,.5);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:all .12s ease}
+a,button{cursor:none}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+::selection{background:var(--gold);color:var(--black)}
+
+/* LOADER */
+#loader{position:fixed;inset:0;background:var(--black);z-index:9000;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:20px;transition:opacity .8s ease,visibility .8s ease}
+#loader.hidden{opacity:0;visibility:hidden;pointer-events:none}
+.loader-name{font-family:var(--font-display);font-size:48px;letter-spacing:12px;color:var(--white);animation:loaderPulse 1.5s ease infinite}
+.loader-bar{width:200px;height:1px;background:var(--dark-gray);position:relative;overflow:hidden}
+.loader-bar::after{content:'';position:absolute;inset:0;background:var(--gold);animation:loaderFill 1.8s cubic-bezier(.16,1,.3,1) forwards}
+@keyframes loaderPulse{0%,100%{opacity:.5}50%{opacity:1}}
+@keyframes loaderFill{from{transform:translateX(-100%)}to{transform:translateX(0)}}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:28px 48px;display:flex;align-items:center;justify-content:space-between;transition:all .5s ease}
+nav.scrolled{background:rgba(10,10,10,.94);backdrop-filter:blur(12px);padding:18px 48px;border-bottom:1px solid rgba(201,168,76,.12)}
+.nav-logo{font-family:var(--font-display);font-size:28px;letter-spacing:6px;color:var(--white)}
+.nav-logo span{color:var(--gold)}
+.nav-links{display:flex;gap:36px;list-style:none}
+.nav-links a{font-size:10px;font-weight:400;letter-spacing:3px;text-transform:uppercase;color:var(--light);position:relative;transition:color .3s}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;right:100%;height:1px;background:var(--gold);transition:right .3s ease}
+.nav-links a:hover{color:var(--gold)}
+.nav-links a:hover::after{right:0}
+.nav-socials{display:flex;gap:18px}
+.nav-socials a{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--silver);transition:color .3s}
+.nav-socials a:hover{color:var(--gold)}
+
+/* HERO */
+#hero{position:relative;height:100vh;min-height:700px;display:flex;align-items:flex-end;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 65% 50%,rgba(201,168,76,.06) 0%,transparent 70%),linear-gradient(160deg,var(--black) 0%,#0d0d0d 40%,#080808 100%)}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(201,168,76,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(201,168,76,.04) 1px,transparent 1px);background-size:80px 80px;mask-image:radial-gradient(ellipse 70% 70% at 70% 50%,black 20%,transparent 80%)}
+.hero-art{position:absolute;right:6%;top:50%;transform:translateY(-50%);width:42%;max-width:540px;opacity:0;animation:fadeSlideLeft 1.4s cubic-bezier(.16,1,.3,1) .3s forwards}
+.hero-fvrt-logo{width:100%;margin-bottom:24px;text-align:center}
+.hero-fvrt-logo img{width:100%;max-width:180px;height:auto;margin:0 auto;opacity:.95}
+.hero-portrait-frame{position:relative;width:100%;padding-top:130%}
+.hero-portrait-frame::before{content:'';position:absolute;top:-16px;right:-16px;width:100%;height:100%;border:1px solid rgba(201,168,76,.25);z-index:0}
+.hero-portrait-frame::after{content:'';position:absolute;bottom:-16px;left:-16px;width:60%;height:60%;border:1px solid rgba(201,168,76,.12);z-index:0}
+.hero-portrait-inner{position:absolute;inset:0;overflow:hidden;z-index:1}
+.hero-portrait-inner img{width:100%;height:100%;object-fit:cover;object-position:center top;filter:grayscale(8%) contrast(1.05)}
+.hero-portrait-fade{position:absolute;bottom:0;left:0;right:0;height:35%;background:linear-gradient(to top,rgba(10,10,10,.75),transparent);z-index:2}
+.hero-portrait-tag{position:absolute;top:20px;left:20px;font-size:8px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;z-index:3;font-family:var(--font-body)}
+.hero-content{position:relative;z-index:2;padding:0 48px 80px;max-width:58%}
+.hero-eyebrow{font-size:9px;font-weight:400;letter-spacing:6px;text-transform:uppercase;color:var(--gold);margin-bottom:16px;opacity:0;animation:fadeUp .8s ease .5s forwards}
+.hero-name{font-family:var(--font-display);font-size:clamp(80px,12vw,160px);line-height:.88;letter-spacing:4px;color:var(--white);opacity:0;animation:fadeUp 1s cubic-bezier(.16,1,.3,1) .2s forwards}
+.hero-name .gold{color:var(--gold)}
+.hero-subtitle{font-family:var(--font-serif);font-size:clamp(16px,1.8vw,24px);font-weight:300;font-style:italic;color:var(--light);margin:20px 0 24px;opacity:0;animation:fadeUp .8s ease .7s forwards;max-width:480px;line-height:1.5}
+.hero-credentials{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px;opacity:0;animation:fadeUp .8s ease .85s forwards}
+.hero-cred-tag{padding:5px 14px;border:1px solid rgba(201,168,76,.35);font-size:8px;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);font-family:var(--font-body)}
+.hero-stats{display:flex;gap:36px;margin-bottom:36px;opacity:0;animation:fadeUp .8s ease .95s forwards}
+.hero-stat-num{font-family:var(--font-display);font-size:32px;letter-spacing:2px;color:var(--gold)}
+.hero-stat-label{font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:var(--silver);margin-top:2px}
+.hero-ctas{display:flex;gap:16px;opacity:0;animation:fadeUp .8s ease 1.1s forwards}
+.btn-primary{padding:14px 36px;background:var(--gold);color:var(--black);font-family:var(--font-body);font-size:10px;font-weight:500;letter-spacing:3px;text-transform:uppercase;border:none;position:relative;overflow:hidden;transition:color .3s}
+.btn-primary::before{content:'';position:absolute;inset:0;background:var(--black);transform:translateX(-101%);transition:transform .3s ease}
+.btn-primary:hover{color:var(--gold)}
+.btn-primary:hover::before{transform:translateX(0)}
+.btn-primary span{position:relative;z-index:1}
+.btn-outline{padding:13px 36px;background:transparent;color:var(--off-white);font-family:var(--font-body);font-size:10px;font-weight:400;letter-spacing:3px;text-transform:uppercase;border:1px solid rgba(255,255,255,.2);transition:all .3s ease;display:inline-block}
+.btn-outline:hover{border-color:var(--gold);color:var(--gold)}
+.hero-scroll{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;opacity:0;animation:fadeUp .8s ease 1.4s forwards}
+.hero-scroll span{font-size:8px;letter-spacing:3px;text-transform:uppercase;color:var(--silver)}
+.scroll-line{width:1px;height:48px;background:linear-gradient(to bottom,var(--gold),transparent);animation:scrollPulse 2s ease infinite}
+
+/* TICKER */
+.ticker{background:var(--gold);padding:10px 0;overflow:hidden;white-space:nowrap}
+.ticker-inner{display:inline-flex;animation:ticker 35s linear infinite}
+.ticker-item{font-family:var(--font-display);font-size:13px;letter-spacing:4px;color:var(--black);padding:0 28px}
+.ticker-dot{color:rgba(0,0,0,.3)}
+
+/* SECTIONS */
+section{padding:120px 48px}
+.section-label{font-size:9px;letter-spacing:5px;text-transform:uppercase;color:var(--gold);margin-bottom:12px;display:flex;align-items:center;gap:16px}
+.section-label::before{content:'';width:32px;height:1px;background:var(--gold)}
+.section-title{font-family:var(--font-display);font-size:clamp(48px,7vw,96px);line-height:.92;letter-spacing:3px;color:var(--white)}
+.section-title em{font-family:var(--font-serif);font-style:italic;color:var(--gold);letter-spacing:0}
+
+/* MUSIC */
+#music{background:var(--off-black);position:relative;overflow:hidden}
+#music::before{content:'MUSIC';position:absolute;right:-30px;top:50%;transform:translateY(-50%) rotate(90deg);font-family:var(--font-display);font-size:200px;letter-spacing:20px;color:rgba(255,255,255,.015);white-space:nowrap;user-select:none}
+.music-layout{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;max-width:1400px;margin:0 auto}
+.music-header{margin-bottom:48px}
+.releases-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px}
+.release-card{position:relative;overflow:hidden;background:var(--charcoal);cursor:none;aspect-ratio:1}
+.release-card.featured{grid-column:span 2;aspect-ratio:2/1}
+.release-card-art{position:absolute;inset:0;overflow:hidden}
+.release-card-art img{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.16,1,.3,1)}
+.release-card:hover .release-card-art img{transform:scale(1.06)}
+.release-card-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.9) 0%,transparent 60%);padding:20px;display:flex;flex-direction:column;justify-content:flex-end}
+.release-title{font-family:var(--font-display);font-size:20px;letter-spacing:3px;color:var(--white)}
+.release-card.featured .release-title{font-size:32px}
+.release-type{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.release-year{font-size:10px;color:var(--silver);margin-top:4px}
+.play-btn{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) scale(0);width:54px;height:54px;border:1px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:18px;transition:transform .3s cubic-bezier(.34,1.56,.64,1);background:rgba(0,0,0,.4);backdrop-filter:blur(4px)}
+.release-card:hover .play-btn{transform:translate(-50%,-50%) scale(1)}
+.music-right{padding-top:60px}
+.stream-intro{font-family:var(--font-serif);font-size:22px;font-style:italic;color:var(--light);line-height:1.6;margin-bottom:40px}
+.platforms{display:flex;flex-direction:column;gap:1px}
+.platform-row{display:flex;align-items:center;justify-content:space-between;padding:20px 24px;background:var(--charcoal);border-left:0px solid var(--gold);transition:all .3s ease;cursor:none}
+.platform-row:hover{background:var(--dark-gray);border-left-width:3px;padding-left:21px}
+.platform-name{font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:var(--off-white);font-weight:400}
+.platform-arrow{font-size:16px;color:var(--gold);transition:transform .3s ease}
+.platform-row:hover .platform-arrow{transform:translateX(4px)}
+
+/* BIO */
+#bio{background:var(--black);position:relative}
+.bio-layout{display:grid;grid-template-columns:1fr 1.2fr;gap:80px;max-width:1400px;margin:0 auto;align-items:start}
+.bio-left{position:sticky;top:100px}
+.bio-portrait{position:relative;width:100%;padding-top:135%;overflow:hidden;background:var(--charcoal)}
+.bio-portrait img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;filter:grayscale(10%) contrast(1.08)}
+.bio-portrait-fade{position:absolute;bottom:0;left:0;right:0;height:30%;background:linear-gradient(to top,rgba(10,10,10,.6),transparent);z-index:2}
+.bio-portrait-decor{position:absolute;bottom:-20px;right:-20px;width:50%;height:50%;border:1px solid rgba(201,168,76,.2);pointer-events:none;z-index:3}
+.bio-portrait-label{position:absolute;bottom:24px;left:20px;font-size:8px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);z-index:4;font-family:var(--font-body)}
+.bio-header{margin-bottom:40px}
+.bio-text{font-family:var(--font-serif);font-size:18px;line-height:1.8;color:var(--light);font-weight:300;margin-bottom:18px}
+.bio-text.lead{font-size:21px;color:var(--off-white);border-left:2px solid var(--gold);padding-left:24px;margin-bottom:28px}
+.bio-stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;margin:44px 0;background:var(--dark-gray)}
+.bio-stat{padding:24px 16px;background:var(--off-black);text-align:center}
+.bio-stat-num{font-family:var(--font-display);font-size:30px;letter-spacing:2px;color:var(--gold)}
+.bio-stat-label{font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--silver);margin-top:4px}
+
+/* Grammy badge */
+.grammy-row{display:flex;gap:12px;margin:28px 0;flex-wrap:wrap}
+.grammy-badge{display:flex;align-items:center;gap:10px;padding:12px 18px;background:var(--charcoal);border:1px solid rgba(201,168,76,.25);border-left:3px solid var(--gold)}
+.grammy-badge-icon{font-size:20px}
+.grammy-badge-text{}
+.grammy-badge-title{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:500}
+.grammy-badge-sub{font-size:9px;color:var(--silver);letter-spacing:1px;margin-top:2px}
+
+.press-section{margin-top:36px}
+.press-title{font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--silver);margin-bottom:16px}
+.press-logos{display:flex;flex-wrap:wrap;gap:8px}
+.press-tag{padding:7px 14px;border:1px solid rgba(255,255,255,.1);font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:var(--silver);transition:all .3s ease}
+.press-tag:hover{border-color:var(--gold);color:var(--gold)}
+
+/* QUOTE BREAK */
+.quote-break{background:var(--off-black);padding:100px 48px;text-align:center;position:relative;overflow:hidden}
+.quote-break::before{content:'\201C';position:absolute;top:-40px;left:50%;transform:translateX(-50%);font-family:var(--font-serif);font-size:300px;line-height:1;color:rgba(201,168,76,.04);pointer-events:none}
+.quote-text{font-family:var(--font-serif);font-size:clamp(20px,2.8vw,34px);font-style:italic;font-weight:300;color:var(--off-white);max-width:800px;margin:0 auto;line-height:1.6;position:relative}
+.quote-attr{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-top:22px}
+
+/* FUTURE / BLUE OCEAN SECTION */
+#future{background:var(--black);position:relative;overflow:hidden}
+#future::after{content:'FVRT';position:absolute;right:-20px;top:50%;transform:translateY(-50%);font-family:var(--font-display);font-size:240px;color:rgba(255,255,255,.012);user-select:none;pointer-events:none;white-space:nowrap}
+.future-layout{max-width:1400px;margin:0 auto}
+.future-header{margin-bottom:60px}
+.future-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+.future-card{padding:44px 32px;background:var(--off-black);position:relative;overflow:hidden;transition:background .3s ease}
+.future-card:hover{background:var(--charcoal)}
+.future-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:0;background:var(--gold);transition:height .5s ease}
+.future-card:hover::before{height:100%}
+.future-card-num{font-family:var(--font-display);font-size:72px;color:rgba(201,168,76,.1);line-height:1;margin-bottom:16px;letter-spacing:2px}
+.future-card-icon{font-size:28px;margin-bottom:16px}
+.future-card-title{font-family:var(--font-display);font-size:22px;letter-spacing:3px;color:var(--white);margin-bottom:12px}
+.future-card-sub{font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+.future-card-text{font-family:var(--font-serif);font-size:16px;line-height:1.7;color:var(--silver)}
+.future-card-revenue{margin-top:24px;padding:12px 16px;background:rgba(201,168,76,.08);border-left:2px solid var(--gold)}
+.future-card-revenue-label{font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--silver);margin-bottom:4px}
+.future-card-revenue-num{font-family:var(--font-display);font-size:24px;color:var(--gold);letter-spacing:2px}
+.future-bottom-row{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-top:2px}
+.future-wide-card{padding:36px 32px;background:var(--off-black);display:flex;align-items:center;gap:32px;transition:background .3s}
+.future-wide-card:hover{background:var(--charcoal)}
+.future-wide-icon{font-size:36px;flex-shrink:0}
+.future-wide-title{font-family:var(--font-display);font-size:20px;letter-spacing:3px;color:var(--white);margin-bottom:6px}
+.future-wide-text{font-family:var(--font-serif);font-size:15px;color:var(--silver);line-height:1.6}
+
+/* VIDEOS */
+#videos{background:var(--off-black)}
+.videos-layout{max-width:1400px;margin:0 auto}
+.videos-header{margin-bottom:48px}
+.videos-grid{display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:auto auto;gap:2px}
+.video-card{position:relative;overflow:hidden;background:var(--charcoal);cursor:none;aspect-ratio:16/9}
+.video-card.large{grid-row:span 2;aspect-ratio:auto}
+.video-card-inner{position:absolute;inset:0;background:linear-gradient(135deg,#181818 0%,#0e0e0e 100%);display:flex;align-items:center;justify-content:center;transition:transform .6s cubic-bezier(.16,1,.3,1)}
+.video-card:hover .video-card-inner{transform:scale(1.04)}
+.video-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.85) 0%,transparent 55%);padding:20px;display:flex;flex-direction:column;justify-content:flex-end}
+.video-play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) scale(.8);width:60px;height:60px;border:1.5px solid rgba(201,168,76,.6);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:20px;opacity:0;transition:all .3s cubic-bezier(.34,1.56,.64,1);background:rgba(0,0,0,.5)}
+.video-card:hover .video-play{opacity:1;transform:translate(-50%,-50%) scale(1)}
+.video-title{font-family:var(--font-display);font-size:16px;letter-spacing:2px;color:var(--white)}
+.video-card.large .video-title{font-size:28px}
+.video-views{font-size:9px;letter-spacing:2px;color:var(--silver);margin-top:4px}
+.videos-cta{margin-top:32px;text-align:center}
+
+/* MERCH */
+#merch{background:var(--off-black);position:relative;overflow:hidden}
+.merch-layout{max-width:1400px;margin:0 auto}
+.merch-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:48px}
+.merch-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px}
+.merch-card{position:relative;overflow:hidden;background:var(--charcoal);cursor:none}
+.merch-card-art{aspect-ratio:1;overflow:hidden;position:relative}
+.merch-card-art img{width:100%;height:100%;object-fit:cover;object-position:center;transition:transform .6s cubic-bezier(.16,1,.3,1)}
+.merch-card:hover .merch-card-art img{transform:scale(1.05)}
+.merch-card-art::before{content:'';position:absolute;top:12px;right:12px;width:32px;height:32px;border-top:1px solid rgba(201,168,76,.3);border-right:1px solid rgba(201,168,76,.3);z-index:2;pointer-events:none}
+.merch-info{padding:14px 16px;background:var(--charcoal)}
+.merch-name{font-family:var(--font-display);font-size:13px;letter-spacing:3px;color:var(--white);margin-bottom:3px}
+.merch-cat{font-size:8px;letter-spacing:2.5px;text-transform:uppercase;color:var(--silver)}
+.merch-bottom{display:flex;align-items:center;justify-content:space-between;margin-top:10px}
+.merch-price{font-family:var(--font-serif);font-size:18px;color:var(--gold);font-style:italic}
+.merch-add{width:30px;height:30px;border:1px solid rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;color:var(--off-white);font-size:18px;transition:all .3s ease;background:none}
+.merch-add:hover{background:var(--gold);color:var(--black);border-color:var(--gold)}
+
+/* CONNECT */
+#connect{background:var(--black);text-align:center;padding:120px 48px}
+.connect-inner{max-width:680px;margin:0 auto}
+.connect-icon{width:64px;height:64px;border:1px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 32px;color:var(--gold);font-size:22px}
+.connect-title{font-family:var(--font-display);font-size:clamp(48px,6vw,80px);letter-spacing:4px;color:var(--white);line-height:.92;margin-bottom:20px}
+.connect-sub{font-family:var(--font-serif);font-size:19px;font-style:italic;color:var(--light);margin-bottom:40px;line-height:1.6}
+.email-form{display:flex;max-width:480px;margin:0 auto}
+.email-input{flex:1;padding:16px 20px;background:var(--charcoal);border:1px solid rgba(255,255,255,.1);border-right:none;color:var(--off-white);font-family:var(--font-body);font-size:12px;letter-spacing:1px;outline:none;transition:border-color .3s}
+.email-input::placeholder{color:var(--silver)}
+.email-input:focus{border-color:var(--gold)}
+.email-submit{padding:16px 28px;background:var(--gold);color:var(--black);border:none;font-family:var(--font-body);font-size:9px;font-weight:500;letter-spacing:3px;text-transform:uppercase;transition:background .3s ease}
+.email-submit:hover{background:var(--gold-light)}
+#subscribe-msg{margin-top:16px;font-size:11px;color:var(--gold);letter-spacing:2px;opacity:0;transition:opacity .5s}
+
+/* SOCIALS BAR */
+#socials{background:var(--off-black);padding:70px 48px}
+.socials-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+.socials-label{font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--silver)}
+.social-links{display:flex;gap:2px}
+.social-link{display:flex;align-items:center;gap:10px;padding:14px 20px;background:var(--charcoal);font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--light);transition:all .3s ease;cursor:none}
+.social-link:hover{background:var(--dark-gray);color:var(--gold)}
+.social-link svg{width:13px;height:13px;fill:currentColor;flex-shrink:0}
+
+/* FOOTER */
+footer{background:var(--off-black);border-top:1px solid rgba(201,168,76,.12);padding:60px 48px 36px}
+.footer-top{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:48px;margin-bottom:44px}
+.footer-logo{font-family:var(--font-display);font-size:36px;letter-spacing:5px;color:var(--white);margin-bottom:12px}
+.footer-logo span{color:var(--gold)}
+.footer-tagline{font-family:var(--font-serif);font-size:14px;font-style:italic;color:var(--silver);line-height:1.6;max-width:260px}
+.footer-col-title{font-size:8px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
+.footer-links{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-links a{font-size:11px;letter-spacing:1px;color:var(--silver);transition:color .3s}
+.footer-links a:hover{color:var(--off-white)}
+.footer-bottom{display:flex;align-items:center;justify-content:space-between;padding-top:24px;border-top:1px solid rgba(255,255,255,.06)}
+.footer-copy{font-size:9px;letter-spacing:1.5px;color:var(--mid-gray)}
+.footer-legal{display:flex;gap:24px}
+.footer-legal a{font-size:9px;letter-spacing:1.5px;color:var(--mid-gray);transition:color .3s}
+.footer-legal a:hover{color:var(--silver)}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeSlideLeft{from{opacity:0;transform:translateY(-50%) translateX(40px)}to{opacity:1;transform:translateY(-50%) translateX(0)}}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes scrollPulse{0%,100%{opacity:.4}50%{opacity:1}}
+.reveal{opacity:0;transform:translateY(32px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-delay-1{transition-delay:.1s}
+.reveal-delay-2{transition-delay:.2s}
+.reveal-delay-3{transition-delay:.3s}
+.reveal-delay-4{transition-delay:.4s}
+.reveal-delay-5{transition-delay:.5s}
+
+/* RESPONSIVE */
+@media(max-width:1024px){.music-layout,.bio-layout{grid-template-columns:1fr;gap:48px}.bio-left{position:static}.hero-art{display:none}.hero-content{max-width:100%}.videos-grid{grid-template-columns:1fr 1fr}.video-card.large{grid-column:span 2}.merch-grid{grid-template-columns:repeat(2,1fr)}.future-grid{grid-template-columns:1fr}.future-bottom-row{grid-template-columns:1fr}.footer-top{grid-template-columns:1fr 1fr}}
+@media(max-width:768px){nav{padding:20px 24px}nav.scrolled{padding:14px 24px}.nav-links,.nav-socials{display:none}section{padding:80px 24px}.hero-name{font-size:72px}.merch-grid{grid-template-columns:repeat(2,1fr)}.bio-stats-row{grid-template-columns:1fr 1fr}.socials-inner{flex-direction:column;gap:24px}.social-links{flex-wrap:wrap}.footer-top{grid-template-columns:1fr;gap:28px}.footer-bottom{flex-direction:column;gap:14px;text-align:center}.email-form{flex-direction:column}.email-input{border-right:1px solid rgba(255,255,255,.1)}}
+</style>
+</head>
+<body>
+
+<div id="loader"><div class="loader-name">SIA AMUN</div><div class="loader-bar"></div></div>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursor-ring"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-logo">SIA <span>AMUN</span></div>
+  <ul class="nav-links">
+    <li><a href="#music">Music</a></li>
+    <li><a href="#bio">Story</a></li>
+    <li><a href="#future">Vision</a></li>
+    <li><a href="#videos">Videos</a></li>
+    <li><a href="#merch">Merch</a></li>
+    <li><a href="#connect">Connect</a></li>
+  </ul>
+  <div class="nav-socials">
+    <a href="https://open.spotify.com/artist/3otiBYeIAa5xnOAVLj97jF" target="_blank">Spotify</a>
+    <a href="https://www.instagram.com/SIAAMUN" target="_blank">IG</a>
+    <a href="https://www.tiktok.com/@SIAAMUN" target="_blank">TikTok</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-art">
+    <div class="hero-fvrt-logo"><img src="FVRT.avif" alt="FVRT GRL"></div>
+    <div class="hero-portrait-frame">
+      <div class="hero-portrait-inner">
+        <img src="pic1.avif" alt="Sia Amun">
+        <div class="hero-portrait-fade"></div>
+      </div>
+      <div class="hero-portrait-tag">Sia Amun</div>
+    </div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">FVRT GRL, LLC &nbsp;✦&nbsp; Independent Artist &nbsp;✦&nbsp; Grammy Board Member</div>
+    <h1 class="hero-name">SIA<br><span class="gold">AMUN</span></h1>
+    <p class="hero-subtitle">Sensual. Spiritual. Rooted in Truth.<br>4x Platinum Songwriter &amp; Healing Voice.</p>
+    <div class="hero-credentials">
+      <span class="hero-cred-tag">4x Platinum Songwriter</span>
+      <span class="hero-cred-tag">Grammy Board Member</span>
+      <span class="hero-cred-tag">GrammyU Mentor</span>
+      <span class="hero-cred-tag">Independent Artist</span>
+    </div>
+    <div class="hero-stats">
+      <div><div class="hero-stat-num">950K+</div><div class="hero-stat-label">Total Plays</div></div>
+      <div><div class="hero-stat-num">25K+</div><div class="hero-stat-label">Followers</div></div>
+      <div><div class="hero-stat-num">4x</div><div class="hero-stat-label">Platinum Pen</div></div>
+    </div>
+    <div class="hero-ctas">
+      <a href="#music" class="btn-primary"><span>Listen Now</span></a>
+      <a href="#bio" class="btn-outline">Her Story</a>
+    </div>
+  </div>
+  <div class="hero-scroll"><span>Scroll</span><div class="scroll-line"></div></div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker"><div class="ticker-inner">
+  <span class="ticker-item">SIA AMUN</span><span class="ticker-item ticker-dot">✦</span>
+  <span class="ticker-item">DEAR MAMA EP</span><span class="ticker-item ticker-dot">✦</span>
+  <span class="ticker-item">GRAMMY BOARD MEMBER</span><span class="ticker-item ticker-dot">✦</span>
+  <span class="ticker-item">4X PLATINUM SONGWRITER</span><span class="ticker-item ticker-dot">✦</span>
+  <span class="ticker-item">GRAMMYU MENTOR</span><span class="ticker-item ticker-dot">✦</span>
+  <span class="ticker-item">SOMEBODY'S SOMEBODY</span><span class="ticker-item ticker-dot">✦</span>
+  <span class="ticker-item">FVRT GRL</span><span class="ticker-item ticker-dot">✦</span>
+  <span class="ticker-item">NOW STREAMING</span><span class="ticker-item ticker-dot">✦</span>
+  <span class="ticker-item">SIA AMUN</span><span class="ticker-item ticker-dot">✦</span>
+  <span class="ticker-item">DEAR MAMA EP</span><span class="ticker-item ticker-dot">✦</span>
+  <span class="ticker-item">GRAMMY BOARD MEMBER</span><span class="ticker-item ticker-dot">✦</span>
+  <span class="ticker-item">4X PLATINUM SONGWRITER</span><span class="ticker-item ticker-dot">✦</span>
+  <span class="ticker-item">GRAMMYU MENTOR</span><span class="ticker-item ticker-dot">✦</span>
+  <span class="ticker-item">SOMEBODY'S SOMEBODY</span><span class="ticker-item ticker-dot">✦</span>
+  <span class="ticker-item">FVRT GRL</span><span class="ticker-item ticker-dot">✦</span>
+  <span class="ticker-item">NOW STREAMING</span><span class="ticker-item ticker-dot">✦</span>
+</div></div>
+
+<!-- MUSIC -->
+<section id="music">
+  <div class="music-layout">
+    <div class="music-left">
+      <div class="music-header reveal">
+        <div class="section-label">Discography</div>
+        <h2 class="section-title">THE<br><em>Music</em></h2>
+      </div>
+      <div class="releases-grid reveal reveal-delay-2">
+        <div class="release-card featured">
+          <div class="release-card-art"><img src="https://static.wixstatic.com/media/3a089c_64a98169d5624ccea9aeda08129f2caf~mv2.png/v1/fill/w_1000,h_1000,al_c,q_90,enc_avif,quality_auto/dear_mama.png" alt="Dear Mama EP"></div>
+          <div class="release-card-overlay">
+            <div class="release-type">Latest EP</div>
+            <div class="release-title">DEAR MAMA</div>
+            <div class="release-year">Available on all platforms</div>
+          </div>
+          <div class="play-btn">▶</div>
+        </div>
+        <div class="release-card">
+          <div class="release-card-art"><img src="https://static.wixstatic.com/media/3a089c_ef80019e843247268b0e54e31ee31448~mv2.jpg/v1/fill/w_800,h_800,al_c,q_90,enc_avif,quality_auto/somebodys.jpg" alt="Somebody's Somebody"></div>
+          <div class="release-card-overlay">
+            <div class="release-type">Single</div>
+            <div class="release-title">SOMEBODY'S SOMEBODY</div>
+          </div>
+          <div class="play-btn">▶</div>
+        </div>
+        <div class="release-card" style="background:var(--charcoal)">
+          <div class="release-card-art" style="display:flex;align-items:center;justify-content:center;background:linear-gradient(145deg,#161616,#0c0c0c)">
+            <div style="text-align:center;padding:20px">
+              <div style="font-family:var(--font-display);font-size:48px;color:var(--gold);opacity:.3">+</div>
+              <div style="font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--silver);margin-top:8px">More Music</div>
+            </div>
+          </div>
+          <div class="release-card-overlay">
+            <div class="release-type">Full Catalog</div>
+            <div class="release-title">VIEW ALL</div>
+          </div>
+          <div class="play-btn">→</div>
+        </div>
+      </div>
+    </div>
+    <div class="music-right reveal reveal-delay-3">
+      <p class="stream-intro">"Every song is a prayer — born from the depths of real love, real grief, real faith. Stream now and feel what healing sounds like."</p>
+      <div class="platforms">
+        <a href="https://open.spotify.com/artist/3otiBYeIAa5xnOAVLj97jF" target="_blank" class="platform-row"><span class="platform-name">Spotify</span><span class="platform-arrow">→</span></a>
+        <a href="https://music.apple.com/us/artist/sia-amun/967707754" target="_blank" class="platform-row"><span class="platform-name">Apple Music</span><span class="platform-arrow">→</span></a>
+        <a href="https://tidal.com/@siaamun" target="_blank" class="platform-row"><span class="platform-name">Tidal</span><span class="platform-arrow">→</span></a>
+        <a href="https://www.soundcloud.com/SIAAMUN" target="_blank" class="platform-row"><span class="platform-name">SoundCloud</span><span class="platform-arrow">→</span></a>
+        <a href="https://www.youtube.com/SIAAMUN" target="_blank" class="platform-row"><span class="platform-name">YouTube Music</span><span class="platform-arrow">→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTE -->
+<div class="quote-break reveal">
+  <p class="quote-text">"She didn't choose music because of her legacy — she chose it because it was the only place she could survive, heal, and rebuild. Now she is building something that cannot be replicated."</p>
+  <p class="quote-attr">— Soul Bounce</p>
+</div>
+
+<!-- BIO -->
+<section id="bio">
+  <div class="bio-layout">
+    <div class="bio-left reveal">
+      <div class="bio-portrait">
+        <img src="3a089c_6a6bc1ce6cce4482bfbfcb84e3ea5a0f~mv2.avif" alt="Sia Amun">
+        <div class="bio-portrait-fade"></div>
+        <div class="bio-portrait-decor"></div>
+        <div class="bio-portrait-label">Sia Amun — Artist, Songwriter &amp; Mentor</div>
+      </div>
+    </div>
+    <div class="bio-right">
+      <div class="bio-header reveal">
+        <div class="section-label">The Story</div>
+        <h2 class="section-title">BORN<br>INTO <em>It</em></h2>
+      </div>
+      <p class="bio-text lead reveal reveal-delay-1">The daughter of TROOP's lead singer and 4x Grammy-winning songwriter-producer Steven Russell Harts, Sia Amun grew up with heavy expectation — and chose merit over legacy.</p>
+      <p class="bio-text reveal reveal-delay-2">Her journey hasn't been glamorous. After a turbulent youth that included eviction at 15, Sia had to choose between the streets and the path of her own becoming. Music became the place she survived, healed, and rebuilt. She found her footing in writers' rooms and late-night studio sessions, shaping her pen and voice while working behind the scenes with icons like Mary J. Blige, Trey Songz, and Lady Gaga.</p>
+      <p class="bio-text reveal reveal-delay-3">The deepest shift in Sia's evolution came through grief. Losing her mother and navigating heartbreak forced her into a different kind of growth. That pain became the soil where her new music bloomed. Today, her art reflects a woman who has been cracked open but chose transformation over bitterness.</p>
+      <p class="bio-text reveal reveal-delay-4">Sia Amun is sensual, spiritual, and rooted in truth. As a 4x Platinum certified songwriter, her velvet tone is wrapped around emotional honesty and nostalgic soul that gives listeners the space to feel, reflect, and heal.</p>
+
+      <!-- Grammy Credentials -->
+      <div class="grammy-row reveal">
+        <div class="grammy-badge">
+          <div class="grammy-badge-icon">🏆</div>
+          <div class="grammy-badge-text">
+            <div class="grammy-badge-title">Grammy Board Member</div>
+            <div class="grammy-badge-sub">Recording Academy</div>
+          </div>
+        </div>
+        <div class="grammy-badge">
+          <div class="grammy-badge-icon">🎓</div>
+          <div class="grammy-badge-text">
+            <div class="grammy-badge-title">GrammyU Mentor</div>
+            <div class="grammy-badge-sub">Shaping the next generation</div>
+          </div>
+        </div>
+        <div class="grammy-badge">
+          <div class="grammy-badge-icon">✍🏾</div>
+          <div class="grammy-badge-text">
+            <div class="grammy-badge-title">4x Platinum Songwriter</div>
+            <div class="grammy-badge-sub">Certified by the RIAA</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bio-stats-row reveal">
+        <div class="bio-stat"><div class="bio-stat-num">950K+</div><div class="bio-stat-label">Total Plays</div></div>
+        <div class="bio-stat"><div class="bio-stat-num">247K+</div><div class="bio-stat-label">Total Views</div></div>
+        <div class="bio-stat"><div class="bio-stat-num">25K+</div><div class="bio-stat-label">Followers</div></div>
+        <div class="bio-stat"><div class="bio-stat-num">10K</div><div class="bio-stat-label">Monthly Listeners</div></div>
+      </div>
+
+      <div class="press-section reveal">
+        <div class="press-title">As Featured In</div>
+        <div class="press-logos">
+          <span class="press-tag">VH1</span><span class="press-tag">Soul Bounce</span>
+          <span class="press-tag">The Hype Magazine</span><span class="press-tag">Rated R&amp;B</span>
+          <span class="press-tag">Singers Room</span><span class="press-tag">TuneCore</span>
+          <span class="press-tag">40+ Blogs</span><span class="press-tag">2 US Magazines</span>
+          <span class="press-tag">1 International Magazine</span>
+        </div>
+      </div>
+      <div class="press-section reveal" style="margin-top:20px">
+        <div class="press-title">Performed Alongside</div>
+        <div class="press-logos">
+          <span class="press-tag">Ziggy Marley</span><span class="press-tag">Keyshia Cole</span>
+          <span class="press-tag">Eric Bellinger</span><span class="press-tag">YG</span>
+          <span class="press-tag">Kenyon Dixon</span><span class="press-tag">D Smoke</span>
+          <span class="press-tag">SIR</span><span class="press-tag">AJ McQueen</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTE 2 -->
+<div class="quote-break reveal" style="background:var(--black)">
+  <p class="quote-text">"At her core, Sia is on a mission bigger than music: to embody true love, to represent God in human form through her authenticity, and to inspire people to live in their truth."</p>
+  <p class="quote-attr">— Artist Biography</p>
+</div>
+
+<!-- FUTURE / BLUE OCEAN VISION -->
+<section id="future">
+  <div class="future-layout">
+    <div class="future-header reveal">
+      <div class="section-label">The Vision</div>
+      <h2 class="section-title">WHAT'S<br><em>Coming</em></h2>
+      <p style="font-family:var(--font-serif);font-size:19px;font-style:italic;color:var(--silver);max-width:600px;line-height:1.7;margin-top:16px">Sia Amun is not just building a music career — she is creating an entirely new world. Three blue oceans. One undeniable purpose.</p>
+    </div>
+
+    <div class="future-grid reveal reveal-delay-1">
+      <!-- Ocean 1: Healing -->
+      <div class="future-card">
+        <div class="future-card-num">01</div>
+        <div class="future-card-icon">🌊</div>
+        <div class="future-card-title">THE HEALING ECONOMY</div>
+        <div class="future-card-sub">Blue Ocean 1 · Wellness &amp; Sound</div>
+        <p class="future-card-text">The global wellness industry exceeds $5 trillion. Sia's music, born from real loss and real faith, is a natural bridge between healing practice and soul sound. No major R&amp;B artist is occupying this space with authentic credibility.</p>
+        <p class="future-card-text" style="margin-top:12px">Coming soon: intimate <strong style="color:var(--off-white)">Healing Concert Experiences</strong>, curated listening guides, and wellness platform licensing — bringing the FVRT GRL frequency to spaces that need it most.</p>
+        <div class="future-card-revenue">
+          <div class="future-card-revenue-label">Year 1 Potential</div>
+          <div class="future-card-revenue-num">$100K+</div>
+        </div>
+      </div>
+
+      <!-- Ocean 2: Songwriter -->
+      <div class="future-card">
+        <div class="future-card-num">02</div>
+        <div class="future-card-icon">✍🏾</div>
+        <div class="future-card-title">THE SONGWRITER ECONOMY</div>
+        <div class="future-card-sub">Blue Ocean 2 · Education &amp; Craft</div>
+        <p class="future-card-text">A 4x Platinum pen combined with Grammy Board credentials creates authority no ordinary artist can claim. The co-writing economy is booming — and Sia is uniquely positioned to lead it as both practitioner and educator.</p>
+        <p class="future-card-text" style="margin-top:12px">Coming soon: <strong style="color:var(--off-white)">The FVRT GRL Songwriting Lab</strong> — a premium online cohort for aspiring songwriters. Private co-write sessions. Lyric coaching. A certified curriculum born from the school of real experience.</p>
+        <div class="future-card-revenue">
+          <div class="future-card-revenue-label">Year 1 Potential</div>
+          <div class="future-card-revenue-num">$150K+</div>
+        </div>
+      </div>
+
+      <!-- Ocean 3: Legacy IP -->
+      <div class="future-card">
+        <div class="future-card-num">03</div>
+        <div class="future-card-icon">📖</div>
+        <div class="future-card-title">THE LEGACY IP ECONOMY</div>
+        <div class="future-card-sub">Blue Ocean 3 · Narrative &amp; IP</div>
+        <p class="future-card-text">Sia's backstory — daughter of a Grammy-winning producer, raised inside the industry, consciously choosing her own path — is IP that belongs in a book, podcast, or docuseries. This is a narrative asset that appreciates over time.</p>
+        <p class="future-card-text" style="margin-top:12px">Coming soon: <strong style="color:var(--off-white)">'Born Into It'</strong> — the memoir, the podcast, and the docuseries pitch that turns her lived experience into a cultural legacy the world can witness.</p>
+        <div class="future-card-revenue">
+          <div class="future-card-revenue-label">Projected Value</div>
+          <div class="future-card-revenue-num">$500K+</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom row -->
+    <div class="future-bottom-row reveal reveal-delay-2">
+      <div class="future-wide-card">
+        <div class="future-wide-icon">🎓</div>
+        <div>
+          <div class="future-wide-title">GRAMMYU MENTOR</div>
+          <p class="future-wide-text">As an official GrammyU Mentor, Sia invests directly in the next generation of artists and songwriters — bringing her real-world knowledge, industry access, and hard-won wisdom to emerging talent across the country.</p>
+        </div>
+      </div>
+      <div class="future-wide-card">
+        <div class="future-wide-icon">✦</div>
+        <div>
+          <div class="future-wide-title">FVRT GRL COLLECTIVE</div>
+          <p class="future-wide-text">A members-only community launching soon — unfiltered access to Sia's creative process, early music drops, behind-the-scenes content, healing playlists, and a direct line to the woman behind the music. This is where the real conversation lives.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VIDEOS -->
+<section id="videos">
+  <div class="videos-layout">
+    <div class="videos-header reveal">
+      <div class="section-label">Visual Story</div>
+      <h2 class="section-title">WATCH<br><em>Live</em></h2>
+    </div>
+    <div class="videos-grid reveal reveal-delay-1">
+      <a href="https://www.youtube.com/SIAAMUN" target="_blank" class="video-card large">
+        <div class="video-card-inner" style="background:linear-gradient(135deg,#181818,#0e0e0e)">
+          <svg viewBox="0 0 400 300" fill="none" width="40%" opacity="0.08"><rect x="50" y="50" width="300" height="200" stroke="white" stroke-width=".5"/><polygon points="170,105 170,195 250,150" fill="white" opacity=".3"/></svg>
+          <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(201,168,76,.04),transparent)"></div>
+        </div>
+        <div class="video-overlay">
+          <div class="video-title" style="font-size:28px">DEAR MAMA — Official Video</div>
+          <div class="video-views">Watch on YouTube · 247K+ Views</div>
+        </div>
+        <div class="video-play">▶</div>
+      </a>
+      <a href="https://www.youtube.com/SIAAMUN" target="_blank" class="video-card">
+        <div class="video-card-inner"><svg viewBox="0 0 200 200" fill="none" width="40%" opacity="0.08"><polygon points="80,60 80,140 140,100" fill="white" opacity=".3"/></svg></div>
+        <div class="video-overlay"><div class="video-title">SOMEBODY'S SOMEBODY</div><div class="video-views">Music Video</div></div>
+        <div class="video-play">▶</div>
+      </a>
+      <a href="https://www.youtube.com/SIAAMUN" target="_blank" class="video-card">
+        <div class="video-card-inner" style="background:linear-gradient(135deg,#141414,#0a0a0a)"><svg viewBox="0 0 200 200" fill="none" width="40%" opacity="0.08"><circle cx="100" cy="100" r="50" stroke="white" stroke-width=".5"/><polygon points="88,78 88,122 122,100" fill="white" opacity=".3"/></svg></div>
+        <div class="video-overlay"><div class="video-title">LIVE SESSION</div><div class="video-views">Behind the Music</div></div>
+        <div class="video-play">▶</div>
+      </a>
+      <a href="https://www.youtube.com/SIAAMUN" target="_blank" class="video-card">
+        <div class="video-card-inner" style="background:linear-gradient(145deg,#1a1a1a,#111)"><div style="text-align:center"><div style="font-family:var(--font-display);font-size:40px;color:var(--gold);opacity:.3">247K+</div><div style="font-size:8px;letter-spacing:3px;text-transform:uppercase;color:var(--silver);margin-top:4px">Total Views</div></div></div>
+        <div class="video-overlay"><div class="video-title">VIEW ALL</div><div class="video-views">Full Channel</div></div>
+        <div class="video-play">→</div>
+      </a>
+    </div>
+    <div class="videos-cta reveal"><a href="https://www.youtube.com/SIAAMUN" target="_blank" class="btn-outline">View Full Channel on YouTube</a></div>
+  </div>
+</section>
+
+<!-- MERCH -->
+<section id="merch">
+  <div class="merch-layout">
+    <div class="merch-header reveal">
+      <div>
+        <div class="section-label">The Shop</div>
+        <h2 class="section-title">FVRT<br><em>GRL</em></h2>
+      </div>
+      <a href="https://www.siaamun.com/merch" target="_blank" class="btn-outline" style="align-self:flex-end">View All</a>
+    </div>
+    <div class="merch-grid reveal reveal-delay-1">
+
+      <div class="merch-card">
+        <div class="merch-card-art"><img src="3a089c_d99da727848e41519a90c1beb4c893de~mv2.avif" alt="Mint Washed Tee"></div>
+        <div class="merch-info">
+          <div class="merch-name">MINT WASHED TEE</div>
+          <div class="merch-cat">Apparel · Pre-Order</div>
+          <div class="merch-bottom"><div class="merch-price">$45</div><a href="https://www.siaamun.com/product-page/copy-of-sia-amun-mint-washed-tee" target="_blank" class="merch-add">+</a></div>
+        </div>
+      </div>
+
+      <div class="merch-card">
+        <div class="merch-card-art"><img src="3a089c_1eb982ca4cc04043b403c08675926cfc~mv2.avif" alt="Washed Tee"></div>
+        <div class="merch-info">
+          <div class="merch-name">WASHED TEE</div>
+          <div class="merch-cat">Apparel · Pre-Order</div>
+          <div class="merch-bottom"><div class="merch-price">$45</div><a href="https://www.siaamun.com/product-page/copy-of-sia-amun-washed-tee" target="_blank" class="merch-add">+</a></div>
+        </div>
+      </div>
+
+      <div class="merch-card">
+        <div class="merch-card-art"><img src="3a089c_f2180dfd6a0a4c208c35e06e6a6ae06f~mv2.avif" alt="Lyric Hoodie"></div>
+        <div class="merch-info">
+          <div class="merch-name">LYRIC HOODIE</div>
+          <div class="merch-cat">Apparel</div>
+          <div class="merch-bottom"><div class="merch-price">$65</div><a href="https://www.siaamun.com/product-page/lyric-hoodie" target="_blank" class="merch-add">+</a></div>
+        </div>
+      </div>
+
+      <div class="merch-card">
+        <div class="merch-card-art"><img src="3a089c_128ab1b05f2d40ffa72b3f8d7d2aef7d~mv2.avif" alt="Garden Hoodie"></div>
+        <div class="merch-info">
+          <div class="merch-name">GARDEN HOODIE</div>
+          <div class="merch-cat">Apparel</div>
+          <div class="merch-bottom"><div class="merch-price">$65</div><a href="https://www.siaamun.com/product-page/garden-hoodie" target="_blank" class="merch-add">+</a></div>
+        </div>
+      </div>
+
+      <div class="merch-card">
+        <div class="merch-card-art"><img src="3a089c_dfbd1d1be3534ba78cae476e82f29cc1~mv2.avif" alt="Love Me More Hoodie"></div>
+        <div class="merch-info">
+          <div class="merch-name">LOVE ME MORE</div>
+          <div class="merch-cat">Apparel</div>
+          <div class="merch-bottom"><div class="merch-price">$50</div><a href="https://www.siaamun.com/product-page/love-me-more-hoodie" target="_blank" class="merch-add">+</a></div>
+        </div>
+      </div>
+
+      <div class="merch-card">
+        <div class="merch-card-art"><img src="3a089c_c2607ffd6f4e40b680aec18a688d4663~mv2.avif" alt="What Love Does Hoodie"></div>
+        <div class="merch-info">
+          <div class="merch-name">WHAT LOVE DOES</div>
+          <div class="merch-cat">Apparel</div>
+          <div class="merch-bottom"><div class="merch-price">$65</div><a href="https://www.siaamun.com/product-page/what-love-does-hoodie" target="_blank" class="merch-add">+</a></div>
+        </div>
+      </div>
+
+      <div class="merch-card">
+        <div class="merch-card-art"><img src="3a089c_ddc78a5f3b0b4c608983b9f280cfcc4b~mv2.png" alt="Face Tee"></div>
+        <div class="merch-info">
+          <div class="merch-name">FACE TEE</div>
+          <div class="merch-cat">Apparel · Pre-Order</div>
+          <div class="merch-bottom"><div class="merch-price">$50</div><a href="https://www.siaamun.com/product-page/sia-amun-face-tee" target="_blank" class="merch-add">+</a></div>
+        </div>
+      </div>
+
+      <div class="merch-card">
+        <div class="merch-card-art" style="background:#0a0a0a"><img src="3a089c_7324328e16c148e49bfbcc91df237bab~mv2.avif" alt="Hat"></div>
+        <div class="merch-info">
+          <div class="merch-name">FVRT GRL HAT</div>
+          <div class="merch-cat">Accessories</div>
+          <div class="merch-bottom"><div class="merch-price">$35</div><a href="https://www.siaamun.com/product-page/hat" target="_blank" class="merch-add">+</a></div>
+        </div>
+      </div>
+
+      <div class="merch-card" style="grid-column:span 2">
+        <div class="merch-card-art" style="aspect-ratio:2/1;background:#0a0a0a;display:flex;align-items:center;justify-content:center;overflow:hidden;">
+          <img src="3a089c_c7dc02f87bc047e9ab9e0cd9b805bd42~mv2.png" alt="FVRT GRL Lip Gloss" style="width:auto;height:100%;object-fit:contain;padding:20px">
+        </div>
+        <div class="merch-info">
+          <div class="merch-name">FVRT GRL LIP GLOSS</div>
+          <div class="merch-cat">Beauty</div>
+          <div class="merch-bottom"><div class="merch-price">$10</div><a href="https://www.siaamun.com/product-page/fvrt-grl-lip-gloss" target="_blank" class="merch-add">+</a></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CONNECT -->
+<section id="connect">
+  <div class="connect-inner">
+    <div class="connect-icon">✉</div>
+    <div class="section-label" style="justify-content:center;margin-bottom:8px">Stay Connected</div>
+    <h2 class="connect-title reveal">LETTERS<br>FROM SIA</h2>
+    <p class="connect-sub reveal reveal-delay-1">Raw. Spiritual. Behind-the-scenes.<br>Join the FVRT GRL Collective — no spam, only soul.</p>
+    <form class="email-form reveal reveal-delay-2" onsubmit="handleSubscribe(event)">
+      <input type="email" class="email-input" placeholder="Your email address" required id="email-input">
+      <button type="submit" class="email-submit">Subscribe</button>
+    </form>
+    <p id="subscribe-msg"></p>
+  </div>
+</section>
+
+<!-- SOCIALS -->
+<section id="socials" style="padding:70px 48px">
+  <div class="socials-inner">
+    <div class="socials-label">Find Sia Amun</div>
+    <div class="social-links">
+      <a href="https://www.instagram.com/SIAAMUN" target="_blank" class="social-link">
+        <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        Instagram
+      </a>
+      <a href="https://www.tiktok.com/@SIAAMUN" target="_blank" class="social-link">
+        <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.79 1.52V6.76a4.85 4.85 0 01-1.02-.07z"/></svg>
+        TikTok
+      </a>
+      <a href="https://www.youtube.com/SIAAMUN" target="_blank" class="social-link">
+        <svg viewBox="0 0 24 24"><path d="M23.495 6.205a3.007 3.007 0 00-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 00.527 6.205a31.247 31.247 0 00-.522 5.805 31.247 31.247 0 00.522 5.783 3.007 3.007 0 002.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 002.088-2.088 31.247 31.247 0 00.5-5.783 31.247 31.247 0 00-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg>
+        YouTube
+      </a>
+      <a href="https://www.threads.com/@SIAAMUN" target="_blank" class="social-link">
+        <svg viewBox="0 0 24 24"><path d="M12.186 24h-.007c-3.581-.024-6.334-1.205-8.184-3.509C2.35 18.44 1.5 15.586 1.472 12.01v-.017c.03-3.579.879-6.43 2.525-8.482C5.868 1.206 8.617.027 12.191 0h.014c2.746.02 5.043.725 6.826 2.098 1.677 1.29 2.858 3.13 3.509 5.467l-2.04.569c-1.104-3.96-3.898-5.984-8.304-6.015-2.91.022-5.11.936-6.54 2.717C4.307 6.504 3.616 8.914 3.589 12c.027 3.086.718 5.496 2.057 7.164 1.43 1.783 3.631 2.698 6.54 2.717 2.623-.02 4.358-.631 5.8-2.045 1.647-1.613 1.618-3.593 1.09-4.798-.31-.71-.873-1.3-1.634-1.75-.192 1.352-.622 2.446-1.284 3.272-.886 1.102-2.14 1.704-3.73 1.79-1.202.065-2.361-.218-3.259-.801-1.063-.689-1.685-1.74-1.752-2.964-.065-1.19.408-2.285 1.33-3.082.88-.76 2.119-1.207 3.583-1.291a13.853 13.853 0 013.02.142c-.126-.742-.375-1.332-.75-1.757-.513-.583-1.289-.876-2.303-.876l-.027.001c-.762.018-1.619.221-2.138.639l-1.186-1.607c.86-.638 2.079-.99 3.296-1.012l.049-.001c1.614 0 2.93.479 3.804 1.485.96 1.099 1.293 2.729 1.012 4.76.67.479 1.202 1.05 1.585 1.9.726 1.638.718 4.243-1.499 6.376-1.818 1.778-3.996 2.596-7.174 2.612z"/></svg>
+        Threads
+      </a>
+      <a href="https://open.spotify.com/artist/3otiBYeIAa5xnOAVLj97jF" target="_blank" class="social-link">
+        <svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+        Spotify
+      </a>
+      <a href="https://www.facebook.com/SIAAMUN" target="_blank" class="social-link">
+        <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        Facebook
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-logo">SIA <span>AMUN</span></div>
+      <p class="footer-tagline">"Every song is a prayer. Every lyric a mirror. Every performance a reminder that healing is possible."</p>
+    </div>
+    <div>
+      <div class="footer-col-title">Navigate</div>
+      <ul class="footer-links">
+        <li><a href="#music">Music</a></li><li><a href="#bio">Story</a></li>
+        <li><a href="#future">Vision</a></li><li><a href="#videos">Videos</a></li>
+        <li><a href="#merch">Merch</a></li><li><a href="#connect">Connect</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Stream</div>
+      <ul class="footer-links">
+        <li><a href="https://open.spotify.com/artist/3otiBYeIAa5xnOAVLj97jF" target="_blank">Spotify</a></li>
+        <li><a href="https://music.apple.com/us/artist/sia-amun/967707754" target="_blank">Apple Music</a></li>
+        <li><a href="https://tidal.com/@siaamun" target="_blank">Tidal</a></li>
+        <li><a href="https://www.soundcloud.com/SIAAMUN" target="_blank">SoundCloud</a></li>
+        <li><a href="https://www.youtube.com/SIAAMUN" target="_blank">YouTube</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Legal</div>
+      <ul class="footer-links">
+        <li><a href="https://www.siaamun.com/_files/ugd/3a089c_93769ba349ce4198a660d016c2b9b2a5.pdf" target="_blank">FAQ</a></li>
+        <li><a href="https://www.siaamun.com/_files/ugd/3a089c_256000339c0542d8aaceecf6648450d2.pdf" target="_blank">Shipping &amp; Returns</a></li>
+        <li><a href="https://www.siaamun.com/_files/ugd/3a089c_c90aafa76f7b4dcfa4d986b6ed5401da.pdf" target="_blank">Terms</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2026 FVRT GRL, LLC &nbsp;✦&nbsp; All Rights Reserved &nbsp;✦&nbsp; siaamun.com</span>
+    <div class="footer-legal">
+      <a href="https://www.siaamun.com/_files/ugd/3a089c_93769ba349ce4198a660d016c2b9b2a5.pdf" target="_blank">FAQ</a>
+      <a href="https://www.siaamun.com/_files/ugd/3a089c_256000339c0542d8aaceecf6648450d2.pdf" target="_blank">Shipping</a>
+      <a href="https://www.siaamun.com/_files/ugd/3a089c_c90aafa76f7b4dcfa4d986b6ed5401da.pdf" target="_blank">Terms</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('load',()=>{setTimeout(()=>{document.getElementById('loader').classList.add('hidden')},1800)});
+const cursor=document.getElementById('cursor'),ring=document.getElementById('cursor-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cursor.style.left=mx+'px';cursor.style.top=my+'px'});
+(function anim(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(anim)})();
+window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('scrolled',scrollY>60));
+const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')}),{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+function handleSubscribe(e){e.preventDefault();const m=document.getElementById('subscribe-msg');m.textContent="\u2756 You're in. Welcome to the FVRT GRL Collective.";m.style.opacity='1';document.getElementById('email-input').value='';setTimeout(()=>{m.style.opacity='0'},5000)}
+</script>
+</body>
+</html>

@@ -1,0 +1,1460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sia Amun — Official Site</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Megrim&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Jost:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --white: #FFFFFF;
+  --off-white: #F8F6F3;
+  --black: #0A0A0A;
+  --charcoal: #222222;
+  --gray: #777;
+  --light-gray: #E5E5E5;
+  --gold: #C9A84C;
+  --gold-light: #E8CB7A;
+  --font-display: 'Megrim', sans-serif;
+  --font-serif: 'Cormorant Garamond', serif;
+  --font-body: 'Jost', sans-serif;
+  --nav-h: 72px;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-snap-type: y proximity;
+}
+
+body {
+  background: var(--white);
+  color: var(--black);
+  font-family: var(--font-body);
+  font-weight: 300;
+  overflow-x: hidden;
+}
+
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; display: block; }
+::selection { background: var(--gold); color: var(--black); }
+
+/* ─── NAV ─── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 200;
+  height: var(--nav-h);
+  padding: 0 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(255,255,255,0.97);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--light-gray);
+  transition: box-shadow .3s;
+}
+nav.shadowed { box-shadow: 0 2px 20px rgba(0,0,0,.06); }
+.nav-logo {
+  font-family: var(--font-display);
+  font-size: 20px;
+  letter-spacing: 5px;
+  color: var(--black);
+}
+.nav-links {
+  display: flex;
+  gap: 36px;
+  list-style: none;
+}
+.nav-links a {
+  font-size: 9.5px;
+  font-weight: 400;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--charcoal);
+  position: relative;
+  padding-bottom: 2px;
+  transition: color .2s;
+}
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px; left: 0; right: 100%;
+  height: 1px;
+  background: var(--gold);
+  transition: right .3s ease;
+}
+.nav-links a:hover { color: var(--black); }
+.nav-links a:hover::after { right: 0; }
+.nav-soon {
+  font-size: 7px;
+  letter-spacing: 0;
+  color: var(--gray);
+  vertical-align: super;
+  margin-left: 2px;
+  font-family: var(--font-body);
+}
+.nav-socials {
+  display: flex;
+  gap: 20px;
+}
+.nav-socials a {
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gray);
+  transition: color .2s;
+}
+.nav-socials a:hover { color: var(--black); }
+
+/* ─── HERO ─── */
+#home {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  height: 100vh;
+  padding-top: var(--nav-h);
+  scroll-snap-align: start;
+  background: var(--white);
+  overflow: hidden;
+}
+.hero-img-col {
+  position: relative;
+  overflow: hidden;
+  height: calc(100vh - var(--nav-h));
+}
+.hero-img-col img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+}
+.hero-text-col {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  padding: 48px 64px 48px 48px;
+  height: calc(100vh - var(--nav-h));
+}
+.hero-name-area {
+  /* top — name */
+}
+.hero-name {
+  font-family: var(--font-display);
+  font-size: clamp(80px, 8.5vw, 128px);
+  line-height: 0.88;
+  letter-spacing: 8px;
+  color: var(--black);
+}
+.hero-quote-area {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.hero-quote-block {
+  border-left: 2px solid var(--gold);
+  padding-left: 22px;
+  max-width: 420px;
+}
+.hero-quote {
+  font-family: var(--font-serif);
+  font-size: clamp(17px, 1.5vw, 21px);
+  font-style: italic;
+  font-weight: 300;
+  color: var(--charcoal);
+  line-height: 1.75;
+}
+.hero-attr {
+  font-size: 9px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gray);
+  margin-top: 18px;
+  margin-left: 24px;
+}
+.btn {
+  padding: 13px 32px;
+  font-family: var(--font-body);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  display: inline-block;
+  transition: all .25s ease;
+  cursor: pointer;
+  border: none;
+}
+.btn-dark {
+  background: var(--black);
+  color: var(--white);
+  border: 1.5px solid var(--black);
+}
+.btn-dark:hover { background: transparent; color: var(--black); }
+.btn-light {
+  background: transparent;
+  color: var(--black);
+  border: 1.5px solid var(--black);
+}
+.btn-light:hover { background: var(--black); color: var(--white); }
+
+/* ─── ACCOLADES TICKER ─── */
+.ticker-wrap {
+  background: var(--black);
+  padding: 15px 0;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 100%;
+}
+.ticker-track {
+  display: inline-flex;
+  animation: ticker 35s linear infinite;
+}
+.ticker-item {
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--white);
+  padding: 0 28px;
+}
+.ticker-dot { color: var(--gold); padding: 0 8px; }
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* ─── SECTION COMMON ─── */
+.s-label {
+  font-size: 9px;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 10px;
+}
+.s-title {
+  font-family: var(--font-display);
+  font-size: clamp(44px, 6vw, 80px);
+  letter-spacing: 4px;
+  line-height: 1;
+  color: var(--black);
+}
+.s-title em {
+  font-family: var(--font-serif);
+  font-style: italic;
+  letter-spacing: 0;
+  color: var(--gold);
+}
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity .7s ease, transform .7s ease;
+}
+.reveal.in { opacity: 1; transform: none; }
+
+/* ─── VIDEOS ─── */
+#videos {
+  min-height: 100vh;
+  padding: 100px 0;
+  background: var(--white);
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.videos-head {
+  padding: 0 56px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 44px;
+}
+.videos-head-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.vtrack-btn {
+  width: 44px;
+  height: 44px;
+  border: 1.5px solid var(--black);
+  background: transparent;
+  cursor: pointer;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all .2s;
+  color: var(--black);
+  flex-shrink: 0;
+}
+.vtrack-btn:hover { background: var(--black); color: var(--white); }
+.video-track {
+  display: flex;
+  gap: 18px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  padding: 0 56px 4px;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+}
+.video-track::-webkit-scrollbar { display: none; }
+.v-card {
+  flex-shrink: 0;
+  width: 380px;
+  scroll-snap-align: start;
+  background: var(--off-white);
+  overflow: hidden;
+  position: relative;
+  transition: transform .3s ease;
+}
+.v-card:hover { transform: translateY(-4px); }
+.v-thumb {
+  aspect-ratio: 16/9;
+  overflow: hidden;
+  position: relative;
+  background: var(--charcoal);
+}
+.v-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .5s ease;
+}
+.v-card:hover .v-thumb img { transform: scale(1.05); }
+.v-thumb-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #1a1a1a, #0a0a0a);
+}
+.v-play {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,.15);
+  transition: background .3s;
+}
+.v-card:hover .v-play { background: rgba(0,0,0,.4); }
+.v-play-circle {
+  width: 54px;
+  height: 54px;
+  border: 2px solid rgba(255,255,255,.9);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 18px;
+  transition: all .3s ease;
+  backdrop-filter: blur(4px);
+  background: rgba(0,0,0,.3);
+}
+.v-card:hover .v-play-circle {
+  background: var(--gold);
+  border-color: var(--gold);
+  transform: scale(1.1);
+}
+.v-info {
+  padding: 18px 20px 22px;
+}
+.v-type {
+  font-size: 8.5px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 6px;
+}
+.v-title {
+  font-family: var(--font-display);
+  font-size: 17px;
+  letter-spacing: 2px;
+  color: var(--black);
+  margin-bottom: 4px;
+}
+.v-desc {
+  font-size: 11px;
+  letter-spacing: .5px;
+  color: var(--gray);
+}
+.videos-cta {
+  padding: 32px 56px 0;
+}
+
+/* ─── MUSIC ─── */
+#music {
+  min-height: 100vh;
+  padding: 100px 56px;
+  background: var(--off-white);
+  scroll-snap-align: start;
+}
+.music-top {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 48px;
+}
+.music-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 3px;
+}
+.m-card {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 1;
+  background: var(--light-gray);
+  cursor: pointer;
+}
+.m-card a { display: block; width: 100%; height: 100%; }
+.m-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .5s ease;
+}
+.m-card:hover img { transform: scale(1.06); }
+.m-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0);
+  transition: background .3s;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 20px;
+}
+.m-card:hover .m-card-overlay { background: rgba(0,0,0,.7); }
+.m-card-info {
+  opacity: 0;
+  transform: translateY(6px);
+  transition: all .3s ease;
+}
+.m-card:hover .m-card-info { opacity: 1; transform: none; }
+.m-card-title {
+  font-family: var(--font-display);
+  font-size: 15px;
+  letter-spacing: 2px;
+  color: white;
+  margin-bottom: 3px;
+}
+.m-card-type {
+  font-size: 8.5px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.7);
+}
+.music-platforms {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 36px;
+}
+.platform-pill {
+  padding: 10px 22px;
+  border: 1.5px solid var(--black);
+  font-size: 9px;
+  font-weight: 400;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--black);
+  transition: all .22s ease;
+}
+.platform-pill:hover { background: var(--black); color: var(--white); }
+.soundcloud-bar {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-top: 32px;
+  padding: 22px 28px;
+  background: var(--white);
+  border-left: 3px solid #FF5500;
+}
+.sc-label {
+  font-size: 9px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #FF5500;
+  margin-bottom: 3px;
+}
+.sc-sub {
+  font-size: 11px;
+  color: var(--gray);
+  letter-spacing: .5px;
+}
+
+/* ─── BIO ─── */
+#bio {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 42% 58%;
+  scroll-snap-align: start;
+}
+.bio-img-col {
+  position: sticky;
+  top: var(--nav-h);
+  height: calc(100vh - var(--nav-h));
+  overflow: hidden;
+}
+.bio-img-col img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  filter: grayscale(10%);
+}
+.bio-content {
+  padding: 100px 64px 100px 56px;
+  background: var(--white);
+}
+.bio-text {
+  font-family: var(--font-serif);
+  font-size: 18px;
+  line-height: 1.85;
+  color: var(--charcoal);
+  margin-bottom: 20px;
+}
+.bio-text.lead {
+  font-size: 21px;
+  color: var(--black);
+  font-weight: 400;
+  border-left: 2px solid var(--gold);
+  padding-left: 22px;
+  margin-bottom: 28px;
+}
+.bio-creds {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 36px 0;
+}
+.bio-cred-tag {
+  padding: 8px 18px;
+  border: 1.5px solid var(--black);
+  font-size: 8.5px;
+  font-weight: 400;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--black);
+}
+.bio-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--light-gray);
+  margin: 36px 0;
+}
+.bio-stat {
+  background: var(--white);
+  padding: 28px 16px;
+  text-align: center;
+}
+.bio-stat-num {
+  font-family: var(--font-display);
+  font-size: 34px;
+  letter-spacing: 2px;
+  color: var(--black);
+}
+.bio-stat-label {
+  font-size: 8.5px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gray);
+  margin-top: 4px;
+}
+.bio-performed-row {
+  margin-top: 32px;
+}
+.bio-sub-label {
+  font-size: 9px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--gray);
+  margin-bottom: 14px;
+}
+.bio-tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.bio-tag {
+  padding: 6px 14px;
+  border: 1px solid var(--light-gray);
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  color: var(--charcoal);
+}
+
+/* ─── PRESS ─── */
+#press {
+  min-height: 100vh;
+  padding: 100px 56px;
+  background: var(--off-white);
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.press-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3px;
+  margin-top: 48px;
+}
+.press-card {
+  background: var(--white);
+  padding: 44px 32px;
+  transition: background .3s, color .3s;
+  cursor: default;
+}
+.press-card:hover { background: var(--black); }
+.press-source {
+  font-size: 9px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 16px;
+}
+.press-quote {
+  font-family: var(--font-serif);
+  font-size: 17px;
+  font-style: italic;
+  font-weight: 300;
+  line-height: 1.75;
+  color: var(--charcoal);
+  transition: color .3s;
+}
+.press-card:hover .press-quote { color: rgba(255,255,255,.85); }
+.press-logos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 44px;
+}
+.press-tag {
+  padding: 10px 20px;
+  border: 1px solid var(--light-gray);
+  font-size: 9.5px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--charcoal);
+  transition: all .2s;
+}
+.press-tag:hover { border-color: var(--black); color: var(--black); }
+
+/* ─── MERCH ─── */
+#merch {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--black);
+  scroll-snap-align: start;
+  text-align: center;
+  padding: 100px 56px;
+  position: relative;
+  overflow: hidden;
+}
+#merch::before {
+  content: 'FVRT GRL';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-display);
+  font-size: clamp(60px, 14vw, 180px);
+  letter-spacing: 12px;
+  color: rgba(255,255,255,.03);
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+}
+.merch-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 600px;
+}
+.merch-label {
+  font-size: 9px;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 20px;
+}
+.merch-title {
+  font-family: var(--font-display);
+  font-size: clamp(60px, 9vw, 110px);
+  letter-spacing: 6px;
+  line-height: 1;
+  color: var(--white);
+  margin-bottom: 28px;
+}
+.merch-sub {
+  font-family: var(--font-serif);
+  font-size: 20px;
+  font-style: italic;
+  font-weight: 300;
+  color: rgba(255,255,255,.6);
+  line-height: 1.7;
+  margin-bottom: 36px;
+}
+.merch-notify-form {
+  display: flex;
+  max-width: 420px;
+  margin: 0 auto;
+}
+.merch-email-input {
+  flex: 1;
+  padding: 14px 18px;
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.15);
+  border-right: none;
+  color: var(--white);
+  font-family: var(--font-body);
+  font-size: 12px;
+  letter-spacing: 1px;
+  outline: none;
+  transition: border-color .2s;
+}
+.merch-email-input::placeholder { color: rgba(255,255,255,.35); }
+.merch-email-input:focus { border-color: var(--gold); }
+.merch-email-btn {
+  padding: 14px 22px;
+  background: var(--gold);
+  color: var(--black);
+  border: none;
+  font-family: var(--font-body);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background .2s;
+}
+.merch-email-btn:hover { background: var(--gold-light); }
+.merch-shop-link {
+  display: inline-block;
+  margin-top: 28px;
+  font-size: 9.5px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.5);
+  border-bottom: 1px solid rgba(255,255,255,.2);
+  padding-bottom: 2px;
+  transition: color .2s, border-color .2s;
+}
+.merch-shop-link:hover { color: var(--gold); border-color: var(--gold); }
+
+/* ─── CONTACT ─── */
+#contact {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 45% 55%;
+  scroll-snap-align: start;
+}
+.contact-left {
+  background: var(--black);
+  padding: 100px 56px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.contact-left .s-label { color: var(--gold); margin-bottom: 10px; }
+.contact-title {
+  font-family: var(--font-display);
+  font-size: clamp(52px, 6.5vw, 88px);
+  letter-spacing: 5px;
+  color: var(--white);
+  line-height: .92;
+  margin: 10px 0 32px;
+}
+.contact-sub {
+  font-family: var(--font-serif);
+  font-size: 18px;
+  font-style: italic;
+  color: rgba(255,255,255,.6);
+  line-height: 1.7;
+  margin-bottom: 44px;
+  max-width: 340px;
+}
+.contact-info-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-bottom: 44px;
+}
+.c-info-label {
+  font-size: 8px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 4px;
+}
+.c-info-val {
+  font-size: 14px;
+  letter-spacing: .5px;
+  color: rgba(255,255,255,.85);
+}
+.c-info-val a { transition: color .2s; }
+.c-info-val a:hover { color: var(--gold); }
+.contact-socials {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.c-social {
+  padding: 10px 18px;
+  border: 1px solid rgba(255,255,255,.15);
+  font-size: 9px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.7);
+  transition: all .2s;
+}
+.c-social:hover { border-color: var(--gold); color: var(--gold); }
+.contact-right {
+  background: var(--off-white);
+  padding: 100px 64px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.contact-form {
+  max-width: 480px;
+}
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-bottom: 14px;
+}
+.form-label {
+  font-size: 8.5px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gray);
+}
+.form-input, .form-textarea, .form-select {
+  padding: 13px 16px;
+  background: var(--white);
+  border: 1.5px solid var(--light-gray);
+  color: var(--black);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 300;
+  outline: none;
+  transition: border-color .2s;
+  appearance: none;
+}
+.form-input:focus, .form-textarea:focus, .form-select:focus { border-color: var(--black); }
+.form-textarea { height: 110px; resize: none; }
+.form-submit {
+  margin-top: 6px;
+  padding: 15px 36px;
+  background: var(--black);
+  color: var(--white);
+  border: none;
+  font-family: var(--font-body);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background .25s;
+}
+.form-submit:hover { background: var(--gold); }
+.form-note {
+  font-size: 10px;
+  color: var(--gold);
+  letter-spacing: 1.5px;
+  margin-top: 12px;
+  opacity: 0;
+  transition: opacity .4s;
+}
+.form-note.show { opacity: 1; }
+
+/* ─── FOOTER ─── */
+footer {
+  background: var(--black);
+  color: var(--white);
+  padding: 40px 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid rgba(255,255,255,.06);
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.footer-logo {
+  font-family: var(--font-display);
+  font-size: 20px;
+  letter-spacing: 5px;
+}
+.footer-links {
+  display: flex;
+  gap: 24px;
+  list-style: none;
+}
+.footer-links a {
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.4);
+  transition: color .2s;
+}
+.footer-links a:hover { color: rgba(255,255,255,.8); }
+.footer-copy {
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  color: rgba(255,255,255,.3);
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 1200px) {
+  .press-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 1024px) {
+  nav { padding: 0 32px; }
+  #home { grid-template-columns: 1fr; }
+  .hero-img-col { height: 60vh; }
+  .hero-text-col { padding: 48px 32px; min-height: auto; }
+  #bio { grid-template-columns: 1fr; }
+  .bio-img-col { position: static; height: 55vh; }
+  .bio-content { padding: 64px 32px; }
+  #contact { grid-template-columns: 1fr; }
+  .contact-left, .contact-right { padding: 64px 32px; }
+  .videos-head, .video-track, .videos-cta { padding-left: 32px; padding-right: 32px; }
+  #music { padding: 80px 32px; }
+  #press { padding: 80px 32px; }
+  .press-grid { grid-template-columns: 1fr; }
+  footer { padding: 32px; flex-direction: column; text-align: center; }
+}
+@media (max-width: 768px) {
+  :root { --nav-h: 60px; }
+  .nav-logo { font-size: 16px; }
+  .nav-links, .nav-socials { display: none; }
+  .hero-name { font-size: 68px; letter-spacing: 5px; }
+  .v-card { width: 300px; }
+  .music-grid { grid-template-columns: repeat(2, 1fr); }
+  .bio-stats { grid-template-columns: 1fr 1fr; }
+  .form-row { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════
+     NAV
+═══════════════════════════════════════ -->
+<nav id="main-nav">
+  <div class="nav-logo">SIA AMUN</div>
+  <ul class="nav-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#videos">Videos</a></li>
+    <li><a href="#music">Music</a></li>
+    <li><a href="#bio">Story</a></li>
+    <li><a href="#press">Press</a></li>
+    <li><a href="#merch">Merch <span class="nav-soon">soon</span></a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-socials">
+    <a href="https://www.instagram.com/SIAAMUN" target="_blank">IG</a>
+    <a href="https://www.tiktok.com/@SIAAMUN" target="_blank">TikTok</a>
+    <a href="https://open.spotify.com/artist/3otiBYeIAa5xnOAVLj97jF" target="_blank">Spotify</a>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════
+     HOME / HERO
+═══════════════════════════════════════ -->
+<section id="home">
+  <div class="hero-img-col">
+    <img src="hero-main.png" alt="Sia Amun">
+  </div>
+  <div class="hero-text-col">
+    <!-- Name -->
+    <div class="hero-name-area">
+      <h1 class="hero-name reveal">SIA<br>AMUN</h1>
+    </div>
+    <!-- Quote -->
+    <div class="hero-quote-area">
+      <div class="hero-quote-block reveal">
+        <p class="hero-quote">"She didn't choose music because of her legacy — she chose it because it was the only place she could survive, heal, and rebuild. Now she is building something that cannot be replicated."</p>
+      </div>
+      <p class="hero-attr reveal">— Soul Bounce</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     ACCOLADES TICKER
+═══════════════════════════════════════ -->
+<div class="ticker-wrap">
+  <div class="ticker-track">
+    <span class="ticker-item">Singer</span><span class="ticker-dot">✦</span>
+    <span class="ticker-item">4x Platinum Songwriter</span><span class="ticker-dot">✦</span>
+    <span class="ticker-item">2x GrammyU Mentor</span><span class="ticker-dot">✦</span>
+    <span class="ticker-item">Recording Academy Voting Member</span><span class="ticker-dot">✦</span>
+    <span class="ticker-item">Thought Leader</span><span class="ticker-dot">✦</span>
+    <span class="ticker-item">Grammy Board Member</span><span class="ticker-dot">✦</span>
+    <span class="ticker-item">Independent Artist</span><span class="ticker-dot">✦</span>
+    <span class="ticker-item">Singer</span><span class="ticker-dot">✦</span>
+    <span class="ticker-item">4x Platinum Songwriter</span><span class="ticker-dot">✦</span>
+    <span class="ticker-item">2x GrammyU Mentor</span><span class="ticker-dot">✦</span>
+    <span class="ticker-item">Recording Academy Voting Member</span><span class="ticker-dot">✦</span>
+    <span class="ticker-item">Thought Leader</span><span class="ticker-dot">✦</span>
+    <span class="ticker-item">Grammy Board Member</span><span class="ticker-dot">✦</span>
+    <span class="ticker-item">Independent Artist</span><span class="ticker-dot">✦</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     VIDEOS
+═══════════════════════════════════════ -->
+<section id="videos">
+  <div class="videos-head reveal">
+    <div>
+      <h2 class="s-title">VIDEOS</h2>
+    </div>
+    <div class="videos-head-right">
+      <button class="vtrack-btn" id="vPrev" aria-label="Previous">&#8592;</button>
+      <button class="vtrack-btn" id="vNext" aria-label="Next">&#8594;</button>
+    </div>
+  </div>
+
+  <div class="video-track" id="videoTrack">
+
+    <div class="v-card">
+      <a href="https://youtu.be/zSuAStj2cH4" target="_blank">
+        <div class="v-thumb">
+          <img src="https://img.youtube.com/vi/zSuAStj2cH4/maxresdefault.jpg" alt="Gone">
+          <div class="v-play"><div class="v-play-circle">&#9654;</div></div>
+        </div>
+        <div class="v-info">
+          <div class="v-type">Music Video</div>
+          <div class="v-title">GONE</div>
+          <div class="v-desc">Official Video</div>
+        </div>
+      </a>
+    </div>
+
+    <div class="v-card">
+      <a href="https://youtu.be/TeW-MR-Bnlk" target="_blank">
+        <div class="v-thumb">
+          <img src="https://img.youtube.com/vi/TeW-MR-Bnlk/maxresdefault.jpg" alt="Somebody's Somebody">
+          <div class="v-play"><div class="v-play-circle">&#9654;</div></div>
+        </div>
+        <div class="v-info">
+          <div class="v-type">Music Video</div>
+          <div class="v-title">SOMEBODY'S SOMEBODY</div>
+          <div class="v-desc">Official Music Video</div>
+        </div>
+      </a>
+    </div>
+
+    <div class="v-card">
+      <a href="https://youtu.be/QMLc_FfbuPY" target="_blank">
+        <div class="v-thumb">
+          <img src="https://img.youtube.com/vi/QMLc_FfbuPY/maxresdefault.jpg" alt="Things Change">
+          <div class="v-play"><div class="v-play-circle">&#9654;</div></div>
+        </div>
+        <div class="v-info">
+          <div class="v-type">Music Video</div>
+          <div class="v-title">THINGS CHANGE</div>
+          <div class="v-desc">Official Video</div>
+        </div>
+      </a>
+    </div>
+
+    <div class="v-card">
+      <a href="https://youtu.be/nljhwz27h3A" target="_blank">
+        <div class="v-thumb">
+          <img src="https://img.youtube.com/vi/nljhwz27h3A/maxresdefault.jpg" alt="Garden">
+          <div class="v-play"><div class="v-play-circle">&#9654;</div></div>
+        </div>
+        <div class="v-info">
+          <div class="v-type">Music Video</div>
+          <div class="v-title">GARDEN</div>
+          <div class="v-desc">Official Video</div>
+        </div>
+      </a>
+    </div>
+
+    <div class="v-card">
+      <a href="https://youtube.com/shorts/_8TY7BD7xXU" target="_blank">
+        <div class="v-thumb">
+          <img src="https://img.youtube.com/vi/_8TY7BD7xXU/hqdefault.jpg" alt="Love Me More" style="object-position:center">
+          <div class="v-play"><div class="v-play-circle">&#9654;</div></div>
+        </div>
+        <div class="v-info">
+          <div class="v-type">Short</div>
+          <div class="v-title">LOVE ME MORE</div>
+          <div class="v-desc">YouTube Short</div>
+        </div>
+      </a>
+    </div>
+
+  </div>
+
+  <div class="videos-cta reveal">
+    <a href="https://www.youtube.com/@SIAAMUN" target="_blank" class="btn btn-light">Full Channel on YouTube</a>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     MUSIC
+═══════════════════════════════════════ -->
+<section id="music">
+  <div class="music-top reveal">
+    <div>
+      <div class="s-label">Discography</div>
+      <h2 class="s-title">MUSIC</h2>
+    </div>
+  </div>
+
+  <div class="music-grid reveal">
+
+    <div class="m-card">
+      <a href="https://open.spotify.com/artist/3otiBYeIAa5xnOAVLj97jF" target="_blank">
+        <img src="https://static.wixstatic.com/media/3a089c_64a98169d5624ccea9aeda08129f2caf~mv2.png" alt="Dear Mama EP">
+        <div class="m-card-overlay">
+          <div class="m-card-info">
+            <div class="m-card-title">DEAR MAMA</div>
+            <div class="m-card-type">EP · Latest</div>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <div class="m-card">
+      <a href="https://open.spotify.com/artist/3otiBYeIAa5xnOAVLj97jF" target="_blank">
+        <img src="https://static.wixstatic.com/media/3a089c_ef80019e843247268b0e54e31ee31448~mv2.jpg" alt="Somebody's Somebody">
+        <div class="m-card-overlay">
+          <div class="m-card-info">
+            <div class="m-card-title">SOMEBODY'S SOMEBODY</div>
+            <div class="m-card-type">Single</div>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <div class="m-card" style="background:#111">
+      <a href="https://open.spotify.com/artist/3otiBYeIAa5xnOAVLj97jF" target="_blank">
+        <img src="IMG_5051.jpg" alt="Sia Amun" style="opacity:.85">
+        <div class="m-card-overlay">
+          <div class="m-card-info">
+            <div class="m-card-title">SINGLES & MORE</div>
+            <div class="m-card-type">Full Catalog</div>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <div class="m-card" style="background:#111">
+      <a href="https://open.spotify.com/artist/3otiBYeIAa5xnOAVLj97jF" target="_blank">
+        <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(145deg,#1a1a1a,#0d0d0d);aspect-ratio:1">
+          <div style="text-align:center;padding:24px">
+            <div style="font-family:var(--font-display);font-size:40px;letter-spacing:4px;color:rgba(201,168,76,.4)">+</div>
+            <div style="font-size:8.5px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.3);margin-top:10px">Stream All</div>
+          </div>
+        </div>
+        <div class="m-card-overlay">
+          <div class="m-card-info">
+            <div class="m-card-title">FULL CATALOG</div>
+            <div class="m-card-type">All Platforms</div>
+          </div>
+        </div>
+      </a>
+    </div>
+
+  </div>
+
+  <!-- Streaming platforms -->
+  <div class="music-platforms reveal">
+    <a href="https://open.spotify.com/artist/3otiBYeIAa5xnOAVLj97jF" target="_blank" class="platform-pill">Spotify</a>
+    <a href="https://music.apple.com/us/artist/sia-amun/967707754" target="_blank" class="platform-pill">Apple Music</a>
+    <a href="https://tidal.com/@siaamun" target="_blank" class="platform-pill">Tidal</a>
+    <a href="https://www.soundcloud.com/SIAAMUN" target="_blank" class="platform-pill">SoundCloud</a>
+    <a href="https://www.youtube.com/@SIAAMUN" target="_blank" class="platform-pill">YouTube Music</a>
+  </div>
+
+  <!-- SoundCloud -->
+  <div class="soundcloud-bar reveal">
+    <div>
+      <div class="sc-label">Also on SoundCloud</div>
+      <div class="sc-sub">Stream &amp; support directly · soundcloud.com/SIAAMUN</div>
+    </div>
+    <a href="https://www.soundcloud.com/SIAAMUN" target="_blank" class="btn btn-light" style="white-space:nowrap;flex-shrink:0">Listen on SoundCloud</a>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     BIO / STORY
+═══════════════════════════════════════ -->
+<section id="bio">
+  <div class="bio-img-col">
+    <img src="3a089c_6a6bc1ce6cce4482bfbfcb84e3ea5a0f~mv2.avif" alt="Sia Amun">
+  </div>
+  <div class="bio-content">
+    <div class="s-label reveal">The Story</div>
+    <h2 class="s-title reveal" style="margin-bottom:40px">BORN<br>INTO <em>It</em></h2>
+
+    <p class="bio-text lead reveal">The daughter of TROOP's lead singer and 4x Grammy-winning songwriter-producer Steven Russell Harts, Sia Amun grew up with heavy expectation — and chose merit over legacy.</p>
+
+    <p class="bio-text reveal">Her journey hasn't been glamorous. After a turbulent youth that included eviction at 15, Sia had to choose between the streets and the path of her own becoming. Music became the place she survived, healed, and rebuilt. She found her footing in writers' rooms and late-night studio sessions, shaping her pen and voice while working behind the scenes with icons like Mary J. Blige, Trey Songz, and Lady Gaga.</p>
+
+    <p class="bio-text reveal">The deepest shift in Sia's evolution came through grief. Losing her mother and navigating heartbreak forced her into a different kind of growth. That pain became the soil where her new music bloomed. Today, her art reflects a woman who has been cracked open — but chose transformation over bitterness.</p>
+
+    <p class="bio-text reveal">Sia Amun is sensual, spiritual, and rooted in truth. As a 4x Platinum certified songwriter, her velvet tone is wrapped around emotional honesty and nostalgic soul that gives listeners the space to feel, reflect, and heal.</p>
+
+    <div class="bio-creds reveal">
+      <span class="bio-cred-tag">4x Platinum Songwriter</span>
+      <span class="bio-cred-tag">Grammy Board Member</span>
+      <span class="bio-cred-tag">2x GrammyU Mentor</span>
+      <span class="bio-cred-tag">Recording Academy Voting Member</span>
+      <span class="bio-cred-tag">Independent Artist</span>
+    </div>
+
+    <div class="bio-stats reveal">
+      <div class="bio-stat">
+        <div class="bio-stat-num">950K+</div>
+        <div class="bio-stat-label">Total Plays</div>
+      </div>
+      <div class="bio-stat">
+        <div class="bio-stat-num">247K+</div>
+        <div class="bio-stat-label">Total Views</div>
+      </div>
+      <div class="bio-stat">
+        <div class="bio-stat-num">25K+</div>
+        <div class="bio-stat-label">Followers</div>
+      </div>
+    </div>
+
+    <div class="bio-performed-row reveal">
+      <div class="bio-sub-label">Performed Alongside</div>
+      <div class="bio-tag-row">
+        <span class="bio-tag">Ziggy Marley</span>
+        <span class="bio-tag">Keyshia Cole</span>
+        <span class="bio-tag">Eric Bellinger</span>
+        <span class="bio-tag">YG</span>
+        <span class="bio-tag">Kenyon Dixon</span>
+        <span class="bio-tag">D Smoke</span>
+        <span class="bio-tag">SiR</span>
+        <span class="bio-tag">AJ McQueen</span>
+      </div>
+    </div>
+
+    <div class="bio-performed-row reveal" style="margin-top:24px">
+      <div class="bio-sub-label">Written For / Alongside</div>
+      <div class="bio-tag-row">
+        <span class="bio-tag">Mary J. Blige</span>
+        <span class="bio-tag">Trey Songz</span>
+        <span class="bio-tag">Lady Gaga</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     PRESS
+═══════════════════════════════════════ -->
+<section id="press">
+  <div class="s-label reveal">As Seen In</div>
+  <h2 class="s-title reveal">PRESS</h2>
+
+  <div class="press-grid reveal">
+    <div class="press-card">
+      <div class="press-source">Soul Bounce</div>
+      <p class="press-quote">"She didn't choose music because of her legacy — she chose it because it was the only place she could survive, heal, and rebuild. Now she is building something that cannot be replicated."</p>
+    </div>
+    <div class="press-card">
+      <div class="press-source">The Hype Magazine</div>
+      <p class="press-quote">"Sia Amun is the rare artist who leads with both craft and conviction — a velvet voice wrapped around emotional honesty that refuses to be ignored."</p>
+    </div>
+    <div class="press-card">
+      <div class="press-source">Rated R&amp;B</div>
+      <p class="press-quote">"Her sound occupies a space that feels nostalgic and urgently present at the same time — soul music with a spiritual center and a pen that doesn't flinch."</p>
+    </div>
+  </div>
+
+  <div class="press-logos reveal">
+    <span class="press-tag">VH1</span>
+    <span class="press-tag">Soul Bounce</span>
+    <span class="press-tag">The Hype Magazine</span>
+    <span class="press-tag">Rated R&amp;B</span>
+    <span class="press-tag">Singers Room</span>
+    <span class="press-tag">TuneCore</span>
+    <span class="press-tag">40+ Blogs</span>
+    <span class="press-tag">2 US Magazines</span>
+    <span class="press-tag">1 International Magazine</span>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     MERCH — COMING SOON
+═══════════════════════════════════════ -->
+<section id="merch">
+  <div class="merch-inner">
+    <div class="merch-label">FVRT GRL, LLC</div>
+    <h2 class="merch-title">THE<br>SHOP</h2>
+    <p class="merch-sub">Something beautiful is coming.<br>Be the first to know when the FVRT GRL collection drops.</p>
+    <form class="merch-notify-form" onsubmit="handleMerchNotify(event)">
+      <input type="email" class="merch-email-input" placeholder="your@email.com" required id="merch-email">
+      <button type="submit" class="merch-email-btn">Notify Me</button>
+    </form>
+    <p id="merch-msg" style="font-size:10px;color:var(--gold);letter-spacing:2px;margin-top:14px;opacity:0;transition:opacity .4s"></p>
+    <a href="https://www.siaamun.com/merch" target="_blank" class="merch-shop-link">Browse Current Shop →</a>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     CONTACT
+═══════════════════════════════════════ -->
+<section id="contact">
+  <div class="contact-left">
+    <div class="s-label">Let's Connect</div>
+    <h2 class="contact-title">GET<br>IN<br>TOUCH</h2>
+    <p class="contact-sub">For bookings, collaborations, press inquiries, and everything in between.</p>
+
+    <div class="contact-info-list">
+      <div>
+        <div class="c-info-label">Booking &amp; Management</div>
+        <div class="c-info-val">
+          <a href="mailto:booking@siaamun.com">booking@siaamun.com</a>
+        </div>
+      </div>
+      <div>
+        <div class="c-info-label">Press Inquiries</div>
+        <div class="c-info-val">
+          <a href="mailto:press@siaamun.com">press@siaamun.com</a>
+        </div>
+      </div>
+      <div>
+        <div class="c-info-label">Based In</div>
+        <div class="c-info-val">Los Angeles, California</div>
+      </div>
+    </div>
+
+    <div class="contact-socials">
+      <a href="https://www.instagram.com/SIAAMUN" target="_blank" class="c-social">Instagram</a>
+      <a href="https://www.tiktok.com/@SIAAMUN" target="_blank" class="c-social">TikTok</a>
+      <a href="https://www.youtube.com/@SIAAMUN" target="_blank" class="c-social">YouTube</a>
+      <a href="https://www.threads.com/@SIAAMUN" target="_blank" class="c-social">Threads</a>
+      <a href="https://open.spotify.com/artist/3otiBYeIAa5xnOAVLj97jF" target="_blank" class="c-social">Spotify</a>
+      <a href="https://www.facebook.com/SIAAMUN" target="_blank" class="c-social">Facebook</a>
+    </div>
+  </div>
+
+  <div class="contact-right">
+    <div class="s-label" style="margin-bottom:8px">Send a Message</div>
+    <h3 style="font-family:var(--font-display);font-size:36px;letter-spacing:4px;color:var(--black);margin-bottom:32px;line-height:1">SAY HELLO</h3>
+    <form class="contact-form" onsubmit="handleContact(event)">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">First Name</label>
+          <input type="text" class="form-input" placeholder="Jane" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Last Name</label>
+          <input type="text" class="form-input" placeholder="Doe">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <input type="email" class="form-input" placeholder="you@email.com" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Inquiry Type</label>
+        <select class="form-select form-input">
+          <option value="">Select one...</option>
+          <option>Booking / Performance</option>
+          <option>Collaboration</option>
+          <option>Press / Media</option>
+          <option>General</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Message</label>
+        <textarea class="form-textarea" placeholder="Tell me what's on your heart..." required></textarea>
+      </div>
+      <button type="submit" class="form-submit">Send Message</button>
+      <p class="form-note" id="contact-note">✦ Message received. Thank you for reaching out.</p>
+    </form>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     FOOTER
+═══════════════════════════════════════ -->
+<footer>
+  <div class="footer-logo">SIA AMUN</div>
+  <ul class="footer-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#videos">Videos</a></li>
+    <li><a href="#music">Music</a></li>
+    <li><a href="#bio">Story</a></li>
+    <li><a href="#press">Press</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="https://www.siaamun.com" target="_blank">Old Site</a></li>
+  </ul>
+  <div class="footer-copy">© 2026 FVRT GRL, LLC ™ &nbsp;·&nbsp; All Rights Reserved &nbsp;·&nbsp; siaamun.com</div>
+</footer>
+
+<script>
+// ─── NAV SHADOW ON SCROLL ───
+const nav = document.getElementById('main-nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('shadowed', window.scrollY > 20);
+});
+
+// ─── SCROLL REVEAL ───
+const revealEls = document.querySelectorAll('.reveal');
+const revealObs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+}, { threshold: 0.12 });
+revealEls.forEach(el => revealObs.observe(el));
+
+// ─── VIDEO TRACK NAV ───
+const track = document.getElementById('videoTrack');
+const cardW = 380 + 18; // card width + gap
+document.getElementById('vNext').addEventListener('click', () => {
+  track.scrollBy({ left: cardW, behavior: 'smooth' });
+});
+document.getElementById('vPrev').addEventListener('click', () => {
+  track.scrollBy({ left: -cardW, behavior: 'smooth' });
+});
+
+// ─── MERCH NOTIFY ───
+function handleMerchNotify(e) {
+  e.preventDefault();
+  const msg = document.getElementById('merch-msg');
+  msg.textContent = '✦ You\'re on the list. We\'ll let you know first.';
+  msg.style.opacity = '1';
+  document.getElementById('merch-email').value = '';
+  setTimeout(() => { msg.style.opacity = '0'; }, 6000);
+}
+
+// ─── CONTACT FORM ───
+function handleContact(e) {
+  e.preventDefault();
+  const note = document.getElementById('contact-note');
+  note.classList.add('show');
+  e.target.reset();
+  setTimeout(() => { note.classList.remove('show'); }, 6000);
+}
+</script>
+</body>
+</html>
