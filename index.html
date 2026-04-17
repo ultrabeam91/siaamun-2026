@@ -496,6 +496,78 @@ nav.shadowed { box-shadow: 0 2px 20px rgba(0,0,0,.06); }
   letter-spacing: .5px;
 }
 
+/* ─── SUPPORT ─── */
+#support {
+  min-height: 60vh;
+  padding: 100px 56px;
+  background: var(--white);
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.support-label {
+  font-size: 9px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 12px;
+}
+.support-heading {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 5vw, 64px);
+  letter-spacing: 6px;
+  margin-bottom: 16px;
+}
+.support-sub {
+  font-size: 13px;
+  letter-spacing: 1px;
+  color: var(--gray);
+  max-width: 480px;
+  margin: 0 auto 48px;
+  line-height: 1.8;
+}
+.support-options {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.support-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 36px 48px;
+  border: 1.5px solid var(--black);
+  min-width: 200px;
+  transition: all .22s ease;
+  text-decoration: none;
+  color: var(--black);
+}
+.support-card:hover {
+  background: var(--black);
+  color: var(--white);
+}
+.support-card-name {
+  font-size: 9px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+.support-card-handle {
+  font-family: var(--font-serif);
+  font-size: 15px;
+  letter-spacing: 1px;
+}
+.support-card-cta {
+  font-size: 8px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  opacity: .5;
+}
+
 /* ─── BIO ─── */
 #bio {
   min-height: 100vh;
@@ -958,6 +1030,7 @@ footer {
     <li><a href="#videos">Videos</a></li>
     <li><a href="#music">Music</a></li>
     <li><a href="#bio">Story</a></li>
+    <li><a href="#support">Support</a></li>
     <li><a href="#press">Press</a></li>
     <li><a href="#merch">Merch <span class="nav-soon">soon</span></a></li>
     <li><a href="#contact">Contact</a></li>
@@ -1241,6 +1314,27 @@ footer {
     <a href="https://www.soundcloud.com/SIAAMUN" target="_blank" class="platform-pill">SoundCloud</a>
     <a href="https://www.youtube.com/@SIAAMUN" target="_blank" class="platform-pill">YouTube Music</a>
     <a href="https://genius.com/artists/Sia-amun" target="_blank" class="platform-pill">Genius</a>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     SUPPORT
+═══════════════════════════════════════ -->
+<section id="support">
+  <div class="support-label reveal">Direct Support</div>
+  <h2 class="support-heading reveal">SUPPORT THE MUSIC</h2>
+  <p class="support-sub reveal">Pay what you want. Every contribution goes directly to the artist and helps create more music.</p>
+  <div class="support-options reveal">
+    <a href="https://paypal.me/longlivesiaamun" target="_blank" class="support-card">
+      <div class="support-card-name">PayPal</div>
+      <div class="support-card-handle">longlivesiaamun</div>
+      <div class="support-card-cta">Send any amount →</div>
+    </a>
+    <a href="https://cash.app/$siaAmun" target="_blank" class="support-card">
+      <div class="support-card-name">Cash App</div>
+      <div class="support-card-handle">$siaAmun</div>
+      <div class="support-card-cta">Send any amount →</div>
+    </a>
   </div>
 </section>
 
