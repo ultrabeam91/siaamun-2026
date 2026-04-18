@@ -1075,23 +1075,25 @@ footer {
   .bio-stats { grid-template-columns: 1fr 1fr; }
   .form-row { grid-template-columns: 1fr; }
 
-  /* ── Hero mobile: full-screen image touching ticker ── */
+  /* ── Hero mobile: full image visible, white background ── */
   #home {
     display: block;
     position: relative;
     height: calc(100vh - var(--nav-h));
     overflow: hidden;
+    background: var(--white);
   }
   .hero-img-col {
     position: absolute;
     inset: 0;
     height: 100%;
     z-index: 0;
+    background: var(--white);
   }
   .hero-img-col img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     object-position: center center;
   }
   .hero-img-col::after { display: none; }
