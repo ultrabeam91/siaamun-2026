@@ -1073,26 +1073,24 @@ footer {
   .bio-stats { grid-template-columns: 1fr 1fr; }
   .form-row { grid-template-columns: 1fr; }
 
-  /* ── Hero mobile: full height, whole image visible, touches ticker ── */
+  /* ── Hero mobile: full-screen image touching ticker ── */
   #home {
     display: block;
     position: relative;
     height: calc(100vh - var(--nav-h));
-    background: var(--white);
     overflow: hidden;
   }
   .hero-img-col {
     position: absolute;
     inset: 0;
     height: 100%;
-    background: var(--white);
+    z-index: 0;
   }
   .hero-img-col img {
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    object-fit: cover;
     object-position: center top;
-    display: block;
   }
   .hero-img-col::after { display: none; }
   /* hide text overlay entirely on mobile */
