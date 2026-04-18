@@ -1063,14 +1063,14 @@ footer {
 }
 @media (max-width: 768px) {
   :root { --nav-h: 60px; }
-  .nav-logo { font-size: 16px; }
+  .nav-logo { font-size: 16px; letter-spacing: 3px; }
   .nav-links, .nav-socials { display: none; }
-  .v-card { width: 300px; }
-  .music-grid { grid-template-columns: repeat(2, 1fr); }
+  .v-card { width: 85vw; }
+  .music-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
   .bio-stats { grid-template-columns: 1fr 1fr; }
   .form-row { grid-template-columns: 1fr; }
 
-  /* ── Hero mobile: full-screen image with name overlaid ── */
+  /* ── Hero mobile: full-screen image, no title ── */
   #home {
     display: block;
     position: relative;
@@ -1089,34 +1089,58 @@ footer {
     object-fit: cover;
     object-position: center top;
   }
-  /* subtle gradient so name text is readable */
-  .hero-img-col::after {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 55%;
-    background: linear-gradient(to bottom, rgba(0,0,0,0.35) 0%, transparent 100%);
-    z-index: 1;
+  .hero-img-col::after { display: none; }
+  /* hide text overlay entirely on mobile */
+  .hero-text-col { display: none; }
+
+  /* ── Section padding fixes ── */
+  #music { padding: 56px 20px; }
+  #press { padding: 56px 20px; }
+  #support { padding: 56px 20px; }
+  #bio .bio-content { padding: 48px 20px; }
+  .contact-left, .contact-right { padding: 48px 20px; }
+  .videos-head, .video-track, .videos-cta { padding-left: 20px; padding-right: 20px; }
+  .music-links { padding: 0 20px; }
+
+  /* ── Footer: center everything ── */
+  footer {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 32px 20px;
+    gap: 20px;
   }
-  .hero-text-col {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 10;
-    padding: 28px 24px;
-    background: transparent;
-    height: auto;
+  .footer-logo { text-align: center; }
+  .footer-links { flex-wrap: wrap; justify-content: center; gap: 16px; }
+  .footer-copy { text-align: center; }
+
+  /* ── Mobile quote strip visible ── */
+  .mobile-quote-strip {
     display: block;
+    background: var(--off-white);
+    padding: 36px 24px;
+    text-align: center;
+    border-bottom: 1px solid var(--light-gray);
   }
-  .hero-name {
-    font-size: 56px;
-    letter-spacing: 5px;
-    line-height: 0.88;
-    color: var(--white);
-    text-shadow: 0 2px 12px rgba(0,0,0,0.2);
+  .mobile-quote-text {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 19px;
+    line-height: 1.75;
+    color: var(--charcoal);
   }
-  .hero-quote-area { display: none; }
+  .mobile-quote-attr {
+    margin-top: 14px;
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gray);
+  }
+}
+
+/* ─── MOBILE QUOTE STRIP (after ticker, mobile only) ─── */
+.mobile-quote-strip {
+  display: none;
 }
 
 /* ─── EMAIL POPUP ─── */
@@ -1365,6 +1389,12 @@ footer {
     <span class="ticker-item">Thought Leader</span><span class="ticker-dot">✦</span>
     <span class="ticker-item">Independent Artist</span><span class="ticker-dot">✦</span>
   </div>
+</div>
+
+<!-- Mobile-only Soul Bounce quote strip -->
+<div class="mobile-quote-strip">
+  <p class="mobile-quote-text">"She didn't choose music because of her legacy — she chose it because it was the only place she could survive, heal, and rebuild. Now she is building something that cannot be replicated."</p>
+  <p class="mobile-quote-attr">— Soul Bounce</p>
 </div>
 
 <!-- ═══════════════════════════════════════
