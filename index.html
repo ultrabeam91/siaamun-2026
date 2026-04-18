@@ -1070,24 +1070,29 @@ footer {
   .bio-stats { grid-template-columns: 1fr 1fr; }
   .form-row { grid-template-columns: 1fr; }
 
-  /* ── Hero mobile: full-screen image, no title ── */
+  /* ── Hero mobile: contained image with white background showing ── */
   #home {
     display: block;
     position: relative;
-    height: calc(100vh - var(--nav-h));
+    background: var(--white);
     overflow: hidden;
   }
   .hero-img-col {
-    position: absolute;
-    inset: 0;
-    height: 100%;
-    z-index: 0;
+    position: static;
+    height: auto;
+    width: 100%;
+    background: var(--white);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
   }
   .hero-img-col img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center top;
+    width: 82%;
+    height: auto;
+    object-fit: contain;
+    object-position: center bottom;
+    display: block;
+    margin: 0 auto;
   }
   .hero-img-col::after { display: none; }
   /* hide text overlay entirely on mobile */
@@ -1647,7 +1652,7 @@ footer {
 ═══════════════════════════════════════ -->
 <section id="bio">
   <div class="bio-content">
-    <div class="s-label reveal">The Story</div>
+    <div class="s-label reveal">Her Story</div>
     <h2 class="s-title reveal" style="margin-bottom:40px">BORN<br>INTO <em>It</em></h2>
 
     <p class="bio-text lead reveal">Born into music royalty as the daughter of TROOP's lead singer and 4x Grammy-winning songwriter-producer Steven Russell Harts, SIA AMUN grew up with heavy expectation. But rather than ride the coattails of legacy, SIA chose to earn her name on merit, learning early that the industry doesn't hand you a career — you have to build it yourself.</p>
