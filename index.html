@@ -1877,8 +1877,16 @@ function closePopup() {
   setTimeout(() => overlay.style.display = 'none', 500);
   sessionStorage.setItem('popupSeen', '1');
 }
-function handlePopupSubmit(e) {
+async function handlePopupSubmit(e) {
   e.preventDefault();
+  const form = e.target;
+  try {
+    await fetch('https://formspree.io/f/mlgabkwa', {
+      method: 'POST',
+      headers: { 'Accept': 'application/json' },
+      body: new FormData(form)
+    });
+  } catch(err) {}
   document.querySelector('.popup-form').style.display = 'none';
   document.querySelector('.popup-skip').style.display = 'none';
   document.getElementById('popup-thanks').style.display = 'block';
@@ -1912,9 +1920,17 @@ document.getElementById('vPrev').addEventListener('click', () => {
 });
 
 // ─── MERCH NOTIFY ───
-function handleMerchNotify(e) {
+async function handleMerchNotify(e) {
   e.preventDefault();
+  const form = e.target;
   const msg = document.getElementById('merch-msg');
+  try {
+    await fetch('https://formspree.io/f/mlgabkwa', {
+      method: 'POST',
+      headers: { 'Accept': 'application/json' },
+      body: new FormData(form)
+    });
+  } catch(err) {}
   msg.textContent = '✦ You\'re on the list. We\'ll let you know first.';
   msg.style.opacity = '1';
   document.getElementById('merch-email').value = '';
@@ -1930,7 +1946,7 @@ async function handleContact(e) {
   btn.textContent = 'Sending...';
   btn.disabled = true;
   try {
-    const res = await fetch('https://formspree.io/f/mlgabkwa', {
+    const res = await fetch('https://formspree.io/f/mqewqodg', {
       method: 'POST',
       headers: { 'Accept': 'application/json' },
       body: new FormData(form)
