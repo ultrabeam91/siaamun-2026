@@ -1048,9 +1048,185 @@ footer {
   .bio-stats { grid-template-columns: 1fr 1fr; }
   .form-row { grid-template-columns: 1fr; }
 }
+
+/* ─── EMAIL POPUP ─── */
+#email-popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity .5s ease;
+  pointer-events: none;
+}
+#email-popup-overlay.visible {
+  opacity: 1;
+  pointer-events: all;
+}
+#email-popup {
+  background: var(--white);
+  max-width: 520px;
+  width: 90%;
+  padding: 56px 52px 48px;
+  text-align: center;
+  position: relative;
+  transform: translateY(24px);
+  transition: transform .5s ease;
+}
+#email-popup-overlay.visible #email-popup {
+  transform: translateY(0);
+}
+.popup-close {
+  position: absolute;
+  top: 18px;
+  right: 22px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: var(--gray);
+  line-height: 1;
+  padding: 4px 8px;
+}
+.popup-close:hover { color: var(--black); }
+.popup-icon {
+  width: 60px;
+  height: 60px;
+  border: 1.5px solid var(--gold);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 24px;
+  font-size: 20px;
+  color: var(--gold);
+}
+.popup-eyebrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  font-size: 8.5px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 16px;
+}
+.popup-eyebrow::before,
+.popup-eyebrow::after {
+  content: '';
+  display: block;
+  width: 32px;
+  height: 1px;
+  background: var(--gold);
+}
+.popup-heading {
+  font-family: var(--font-display);
+  font-size: clamp(38px, 6vw, 64px);
+  letter-spacing: 4px;
+  line-height: 1;
+  color: var(--black);
+  margin-bottom: 16px;
+}
+.popup-soul {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 15px;
+  color: var(--gray);
+  margin-bottom: 10px;
+}
+.popup-desc {
+  font-size: 12px;
+  letter-spacing: .5px;
+  color: var(--gray);
+  line-height: 1.7;
+  margin-bottom: 6px;
+}
+.popup-collective {
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: var(--black);
+  margin-bottom: 28px;
+  font-weight: 500;
+}
+.popup-form {
+  display: flex;
+  gap: 0;
+}
+.popup-input {
+  flex: 1;
+  padding: 14px 18px;
+  border: 1.5px solid #ddd;
+  border-right: none;
+  font-size: 12px;
+  font-family: var(--font-body);
+  letter-spacing: .5px;
+  outline: none;
+  color: var(--black);
+}
+.popup-input:focus { border-color: var(--gold); }
+.popup-btn {
+  padding: 14px 24px;
+  background: var(--gold);
+  color: var(--white);
+  border: none;
+  font-size: 9px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  font-family: var(--font-body);
+  transition: background .2s;
+  white-space: nowrap;
+}
+.popup-btn:hover { background: #a8883a; }
+.popup-skip {
+  display: block;
+  margin-top: 16px;
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gray);
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-family: var(--font-body);
+}
+.popup-skip:hover { color: var(--black); }
+.popup-thanks {
+  display: none;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 17px;
+  color: var(--black);
+  margin-top: 16px;
+}
 </style>
 </head>
 <body>
+
+<!-- ═══════════════════════════════════════
+     EMAIL POPUP
+═══════════════════════════════════════ -->
+<div id="email-popup-overlay" role="dialog" aria-modal="true">
+  <div id="email-popup">
+    <button class="popup-close" onclick="closePopup()" aria-label="Close">✕</button>
+    <div class="popup-icon">✉</div>
+    <div class="popup-eyebrow">Stay Connected</div>
+    <div class="popup-heading">LETTERS<br>FROM SIA</div>
+    <p class="popup-soul">from my soul to yours.</p>
+    <p class="popup-desc">Raw truth. Music. Healing. Behind the scenes. Updates &amp; Exclusives.</p>
+    <p class="popup-collective">Join the FVRT GRL Collective.</p>
+    <form class="popup-form" onsubmit="handlePopupSubmit(event)">
+      <input class="popup-input" type="email" placeholder="Your email address" required>
+      <button class="popup-btn" type="submit">Subscribe</button>
+    </form>
+    <p class="popup-thanks" id="popup-thanks">Thank you — welcome to the collective. ✦</p>
+    <button class="popup-skip" onclick="closePopup()">No thanks</button>
+  </div>
+</div>
 
 <!-- ═══════════════════════════════════════
      NAV
@@ -1607,6 +1783,30 @@ const nav = document.getElementById('main-nav');
 window.addEventListener('scroll', () => {
   nav.classList.toggle('shadowed', window.scrollY > 20);
 });
+
+// ─── EMAIL POPUP ───
+function closePopup() {
+  const overlay = document.getElementById('email-popup-overlay');
+  overlay.classList.remove('visible');
+  setTimeout(() => overlay.style.display = 'none', 500);
+  sessionStorage.setItem('popupSeen', '1');
+}
+function handlePopupSubmit(e) {
+  e.preventDefault();
+  document.querySelector('.popup-form').style.display = 'none';
+  document.querySelector('.popup-skip').style.display = 'none';
+  document.getElementById('popup-thanks').style.display = 'block';
+  setTimeout(closePopup, 2800);
+}
+if (!sessionStorage.getItem('popupSeen')) {
+  setTimeout(() => {
+    const overlay = document.getElementById('email-popup-overlay');
+    overlay.style.display = 'flex';
+    requestAnimationFrame(() => overlay.classList.add('visible'));
+  }, 2500);
+} else {
+  document.getElementById('email-popup-overlay').style.display = 'none';
+}
 
 // ─── SCROLL REVEAL ───
 const revealEls = document.querySelectorAll('.reveal');
