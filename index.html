@@ -588,28 +588,44 @@ nav.shadowed { box-shadow: 0 2px 20px rgba(0,0,0,.06); }
 #bio {
   min-height: 100vh;
   scroll-snap-align: start;
+  background: var(--black);
+  position: relative;
+}
+#bio::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 260px;
+  background: linear-gradient(to bottom, var(--white), var(--black));
+  pointer-events: none;
+  z-index: 0;
 }
 .bio-content {
   max-width: 860px;
   margin: 0 auto;
   padding: 100px 64px;
-  background: var(--white);
+  background: transparent;
+  position: relative;
+  z-index: 1;
 }
 .bio-text {
   font-family: var(--font-serif);
   font-size: 18px;
   line-height: 1.85;
-  color: var(--charcoal);
+  color: rgba(255,255,255,0.75);
   margin-bottom: 20px;
 }
 .bio-text.lead {
   font-size: 21px;
-  color: var(--black);
+  color: var(--white);
   font-weight: 400;
   border-left: 2px solid var(--gold);
   padding-left: 22px;
   margin-bottom: 28px;
 }
+#bio .s-title { color: var(--white); }
 .bio-creds {
   display: flex;
   flex-wrap: wrap;
@@ -618,22 +634,22 @@ nav.shadowed { box-shadow: 0 2px 20px rgba(0,0,0,.06); }
 }
 .bio-cred-tag {
   padding: 8px 18px;
-  border: 1.5px solid var(--black);
+  border: 1.5px solid var(--gold);
   font-size: 8.5px;
   font-weight: 400;
   letter-spacing: 2.5px;
   text-transform: uppercase;
-  color: var(--black);
+  color: var(--gold);
 }
 .bio-stats {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1px;
-  background: var(--light-gray);
+  background: rgba(255,255,255,0.1);
   margin: 36px 0;
 }
 .bio-stat {
-  background: var(--white);
+  background: var(--black);
   padding: 28px 16px;
   text-align: center;
 }
@@ -641,13 +657,13 @@ nav.shadowed { box-shadow: 0 2px 20px rgba(0,0,0,.06); }
   font-family: var(--font-display);
   font-size: 34px;
   letter-spacing: 2px;
-  color: var(--black);
+  color: var(--gold);
 }
 .bio-stat-label {
   font-size: 8.5px;
   letter-spacing: 2px;
   text-transform: uppercase;
-  color: var(--gray);
+  color: rgba(255,255,255,0.45);
   margin-top: 4px;
 }
 .bio-performed-row {
