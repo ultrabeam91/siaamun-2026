@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Megrim&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Jost:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -99,14 +100,14 @@ nav.shadowed { box-shadow: 0 2px 20px rgba(0,0,0,.06); }
 }
 .nav-socials {
   display: flex;
-  gap: 20px;
+  gap: 18px;
+  align-items: center;
 }
 .nav-socials a {
-  font-size: 9px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
+  font-size: 15px;
   color: var(--gray);
   transition: color .2s;
+  line-height: 1;
 }
 .nav-socials a:hover { color: var(--black); }
 
@@ -901,21 +902,35 @@ nav.shadowed { box-shadow: 0 2px 20px rgba(0,0,0,.06); }
 }
 .c-info-val a { transition: color .2s; }
 .c-info-val a:hover { color: var(--gold); }
+.follow-label {
+  font-size: 9px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 16px;
+}
 .contact-socials {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 16px;
+  align-items: center;
 }
 .c-social {
-  padding: 10px 18px;
-  border: 1px solid rgba(255,255,255,.15);
-  font-size: 9px;
-  letter-spacing: 2.5px;
-  text-transform: uppercase;
-  color: rgba(255,255,255,.7);
-  transition: all .2s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  color: rgba(255,255,255,.6);
+  transition: color .2s;
+  text-decoration: none;
 }
-.c-social:hover { border-color: var(--gold); color: var(--gold); }
+.c-social i { font-size: 22px; }
+.c-social span {
+  font-size: 7.5px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+.c-social:hover { color: var(--gold); }
 .contact-right {
   background: var(--off-white);
   padding: 100px 64px;
@@ -1244,9 +1259,12 @@ footer {
     <li><a href="#contact">Contact</a></li>
   </ul>
   <div class="nav-socials">
-    <a href="https://www.instagram.com/SIAAMUN" target="_blank">IG</a>
-    <a href="https://www.tiktok.com/@SIAAMUN" target="_blank">TikTok</a>
-    <a href="https://open.spotify.com/artist/3otiBYeIAa5xnOAVLj97jF" target="_blank">Spotify</a>
+    <a href="https://www.instagram.com/SIAAMUN" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+    <a href="https://www.threads.net/@SIAAMUN" target="_blank" aria-label="Threads"><i class="fa-brands fa-threads"></i></a>
+    <a href="https://www.tiktok.com/@SIAAMUN" target="_blank" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+    <a href="https://www.youtube.com/@SIAAMUN" target="_blank" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+    <a href="https://www.facebook.com/SIAAMUN" target="_blank" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
+    <a href="https://www.soundcloud.com/SIAAMUN" target="_blank" aria-label="SoundCloud"><i class="fa-brands fa-soundcloud"></i></a>
   </div>
 </nav>
 
@@ -1692,32 +1710,15 @@ footer {
     <h2 class="contact-title">GET<br>IN<br>TOUCH</h2>
     <p class="contact-sub">For bookings, collaborations, press inquiries, and everything in between.</p>
 
-    <div class="contact-info-list">
-      <div>
-        <div class="c-info-label">Booking &amp; Management</div>
-        <div class="c-info-val">
-          <a href="mailto:booking@siaamun.com">booking@siaamun.com</a>
-        </div>
-      </div>
-      <div>
-        <div class="c-info-label">Press Inquiries</div>
-        <div class="c-info-val">
-          <a href="mailto:press@siaamun.com">press@siaamun.com</a>
-        </div>
-      </div>
-      <div>
-        <div class="c-info-label">Based In</div>
-        <div class="c-info-val">Los Angeles, California</div>
-      </div>
-    </div>
-
+    <div class="follow-label">Follow Sia</div>
     <div class="contact-socials">
-      <a href="https://www.instagram.com/SIAAMUN" target="_blank" class="c-social">Instagram</a>
-      <a href="https://www.tiktok.com/@SIAAMUN" target="_blank" class="c-social">TikTok</a>
-      <a href="https://www.youtube.com/@SIAAMUN" target="_blank" class="c-social">YouTube</a>
-      <a href="https://www.threads.com/@SIAAMUN" target="_blank" class="c-social">Threads</a>
-      <a href="https://open.spotify.com/artist/3otiBYeIAa5xnOAVLj97jF" target="_blank" class="c-social">Spotify</a>
-      <a href="https://www.facebook.com/SIAAMUN" target="_blank" class="c-social">Facebook</a>
+      <a href="https://www.instagram.com/SIAAMUN" target="_blank" class="c-social"><i class="fa-brands fa-instagram"></i><span>Instagram</span></a>
+      <a href="https://www.threads.net/@SIAAMUN" target="_blank" class="c-social"><i class="fa-brands fa-threads"></i><span>Threads</span></a>
+      <a href="https://www.tiktok.com/@SIAAMUN" target="_blank" class="c-social"><i class="fa-brands fa-tiktok"></i><span>TikTok</span></a>
+      <a href="https://www.youtube.com/@SIAAMUN" target="_blank" class="c-social"><i class="fa-brands fa-youtube"></i><span>YouTube</span></a>
+      <a href="https://www.facebook.com/SIAAMUN" target="_blank" class="c-social"><i class="fa-brands fa-facebook"></i><span>Facebook</span></a>
+      <a href="https://www.soundcloud.com/SIAAMUN" target="_blank" class="c-social"><i class="fa-brands fa-soundcloud"></i><span>SoundCloud</span></a>
+      <a href="https://siaamun.substack.com" target="_blank" class="c-social"><i class="fa-brands fa-substack"></i><span>Substack</span></a>
     </div>
   </div>
 
@@ -1725,19 +1726,21 @@ footer {
     <div class="s-label" style="margin-bottom:8px">Send a Message</div>
     <h3 style="font-family:var(--font-display);font-size:36px;letter-spacing:4px;color:var(--black);margin-bottom:32px;line-height:1">SAY HELLO</h3>
     <form class="contact-form" onsubmit="handleContact(event)">
-      <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">First Name</label>
-          <input type="text" class="form-input" placeholder="Jane" required>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Last Name</label>
-          <input type="text" class="form-input" placeholder="Doe">
-        </div>
+      <div class="form-group">
+        <label class="form-label">Name</label>
+        <input type="text" class="form-input" placeholder="Your full name" required>
       </div>
       <div class="form-group">
         <label class="form-label">Email</label>
         <input type="email" class="form-input" placeholder="you@email.com" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Phone Number</label>
+        <input type="tel" class="form-input" placeholder="+1 (000) 000-0000">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Social Media Handle</label>
+        <input type="text" class="form-input" placeholder="@yourhandle">
       </div>
       <div class="form-group">
         <label class="form-label">Inquiry Type</label>
