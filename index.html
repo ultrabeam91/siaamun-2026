@@ -819,7 +819,7 @@ footer {
   .nav-hamburger { display: flex; }
 
   /* HERO */
-  #home { padding: 80px 6vw 60px; }
+  #home { padding: 60px 5vw 40px; }
   .platform-links { flex-wrap: wrap; justify-content: center; gap: 10px 16px; }
   .cta-buttons { flex-direction: row; }
 
@@ -827,25 +827,27 @@ footer {
   .ticker-wrap { margin: 0; }
 
   /* VIDEOS */
-  #videos { padding: 60px 4vw; }
+  #videos { padding: 40px 4vw 20px; }
   .videos-grid { grid-template-columns: repeat(2, 1fr); }
 
   /* MUSIC */
-  #music { padding: 60px 4vw; }
-  .music-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  #music { padding: 40px 4vw 30px; overflow: hidden; }
+  .music-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; width: 100%; }
+  .music-platforms { flex-wrap: wrap; overflow-x: visible; }
+  .music-platform-link { font-size: 9px; padding: 4px 2px; }
 
   /* BIO */
-  #bio { padding: 0 0 60px; }
+  #bio { padding: 0 0 30px; }
   .bio-content { margin-top: 20px; padding: 0 5vw; }
   .bio-stats { gap: 0; }
   .bio-stat { padding: 16px 8px; }
   .bio-stat-num { font-size: 28px; }
 
   /* PRESS */
-  #press { padding: 60px 5vw; }
+  #press { padding: 40px 5vw; }
 
   /* SUPPORT */
-  #support { padding: 60px 5vw; }
+  #support { padding: 40px 5vw; }
 
   /* CONTACT */
   #contact {
@@ -997,35 +999,35 @@ footer {
     <a class="video-card" href="https://youtu.be/zSuAStj2cH4" target="_blank">
       <img src="https://img.youtube.com/vi/zSuAStj2cH4/maxresdefault.jpg" alt="Gone" onerror="this.src='https://img.youtube.com/vi/zSuAStj2cH4/hqdefault.jpg'">
       <div class="video-card-overlay">
-        <div class="video-play">&#9654;</div>
+        <div class="video-play">&#9654;&#xFE0E;</div>
         <div class="video-label">Gone<div class="video-type">Official Video</div></div>
       </div>
     </a>
     <a class="video-card" href="https://youtu.be/TeW-MR-Bnlk" target="_blank">
       <img src="https://img.youtube.com/vi/TeW-MR-Bnlk/maxresdefault.jpg" alt="Somebody's Somebody" onerror="this.src='https://img.youtube.com/vi/TeW-MR-Bnlk/hqdefault.jpg'">
       <div class="video-card-overlay">
-        <div class="video-play">&#9654;</div>
+        <div class="video-play">&#9654;&#xFE0E;</div>
         <div class="video-label">Somebody's Somebody<div class="video-type">Official Music Video</div></div>
       </div>
     </a>
     <a class="video-card" href="https://youtu.be/QMLc_FfbuPY" target="_blank">
       <img src="https://img.youtube.com/vi/QMLc_FfbuPY/maxresdefault.jpg" alt="Things Change" onerror="this.src='https://img.youtube.com/vi/QMLc_FfbuPY/hqdefault.jpg'">
       <div class="video-card-overlay">
-        <div class="video-play">&#9654;</div>
+        <div class="video-play">&#9654;&#xFE0E;</div>
         <div class="video-label">Things Change<div class="video-type">Official Video</div></div>
       </div>
     </a>
     <a class="video-card" href="https://youtu.be/nljhwz27h3A" target="_blank">
       <img src="https://img.youtube.com/vi/nljhwz27h3A/maxresdefault.jpg" alt="Garden" onerror="this.src='https://img.youtube.com/vi/nljhwz27h3A/hqdefault.jpg'">
       <div class="video-card-overlay">
-        <div class="video-play">&#9654;</div>
+        <div class="video-play">&#9654;&#xFE0E;</div>
         <div class="video-label">Garden<div class="video-type">Official Video</div></div>
       </div>
     </a>
     <a class="video-card" href="https://youtube.com/shorts/_8TY7BD7xXU" target="_blank">
       <img src="https://img.youtube.com/vi/_8TY7BD7xXU/maxresdefault.jpg" alt="Love Me More" onerror="this.src='https://img.youtube.com/vi/_8TY7BD7xXU/hqdefault.jpg'">
       <div class="video-card-overlay">
-        <div class="video-play">&#9654;</div>
+        <div class="video-play">&#9654;&#xFE0E;</div>
         <div class="video-label">Love Me More<div class="video-type">YouTube Short</div></div>
       </div>
     </a>
@@ -1487,7 +1489,7 @@ function togglePreview() {
   if (!scWidget) {
     scWidget = SC.Widget(document.getElementById('sc-player'));
     scWidget.bind(SC.Widget.Events.FINISH, function() {
-      btn.innerHTML = '&#9654;&nbsp; Preview';
+      btn.innerHTML = '&#9654;&#xFE0E;&nbsp; Preview';
       isPlaying = false;
     });
   }
@@ -1498,14 +1500,14 @@ function togglePreview() {
     previewTimer = setTimeout(function() {
       scWidget.pause();
       scWidget.seekTo(0);
-      btn.innerHTML = '&#9654;&nbsp; Preview';
+      btn.innerHTML = '&#9654;&#xFE0E;&nbsp; Preview';
       isPlaying = false;
     }, 45000);
   } else {
     clearTimeout(previewTimer);
     scWidget.pause();
     scWidget.seekTo(0);
-    btn.innerHTML = '&#9654;&nbsp; Preview';
+    btn.innerHTML = '&#9654;&#xFE0E;&nbsp; Preview';
     isPlaying = false;
   }
 }
