@@ -833,8 +833,9 @@ footer {
   /* MUSIC */
   #music { padding: 40px 4vw 30px; overflow: hidden; }
   .music-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; width: 100%; }
-  .music-platforms { flex-wrap: wrap; overflow-x: visible; }
-  .music-platform-link { font-size: 9px; padding: 4px 2px; }
+  .music-platforms { flex-wrap: nowrap; overflow-x: auto; justify-content: center; padding-top: 16px; margin-top: 16px; }
+  .music-platform-link { font-size: 9px; padding: 4px 2px; white-space: nowrap; }
+  .music-platforms .dot { font-size: 6px; }
 
   /* BIO */
   #bio { padding: 0 0 30px; }
