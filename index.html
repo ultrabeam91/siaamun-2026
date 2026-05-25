@@ -1493,18 +1493,33 @@ function toggleMobileMenu() {
 }
 
 // Preview button
-var scWidget;
+var scWidget = null;
 var isPlaying = false;
 var previewTimer = null;
+
+// Pre-initialize widget as soon as page loads so it's ready on first tap
+window.addEventListener('load', function() {
+  if (window.SC && document.getElementById('sc-player')) {
+    scWidget = SC.Widget(document.getElementById('sc-player'));
+    scWidget.bind(SC.Widget.Events.FINISH, function() {
+      var btn = document.getElementById('previewBtn');
+      if (btn) btn.innerHTML = '&#9654;&#xFE0E;&nbsp; Preview';
+      isPlaying = false;
+    });
+  }
+});
+
 function togglePreview() {
   var btn = document.getElementById('previewBtn');
-  if (!scWidget) {
+  // Fallback init if load event beat SC API loading
+  if (!scWidget && window.SC) {
     scWidget = SC.Widget(document.getElementById('sc-player'));
     scWidget.bind(SC.Widget.Events.FINISH, function() {
       btn.innerHTML = '&#9654;&#xFE0E;&nbsp; Preview';
       isPlaying = false;
     });
   }
+  if (!scWidget) return;
   if (!isPlaying) {
     scWidget.play();
     btn.innerHTML = '&#9646;&#9646;&nbsp; Pause';
@@ -1530,7 +1545,7 @@ function togglePreview() {
 <!-- Hidden SoundCloud Player -->
 <iframe id="sc-player" width="1" height="1" scrolling="no" frameborder="no" allow="autoplay; encrypted-media"
   src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%3Atracks%3A2322899936%3Fsecret_token%3Ds-k0rRUPqSykK&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&visual=false"
-  style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;">
+  style="position:absolute;width:1px;height:1px;opacity:0;left:-9999px;">
 </iframe>
 <script src="https://w.soundcloud.com/player/api.js"></script>
 </body>
