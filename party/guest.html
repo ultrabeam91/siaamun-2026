@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Looking for Love · Listening Party</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&family=Barlow+Condensed:wght@400;600;700&family=Cormorant+Garamond:ital@1&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+:root {
+  --bg: #0d0905;
+  --cream: #f2e8d9;
+  --gold: #c8a96e;
+  --gold-dk: #8a6a3a;
+  --gold-xd: #4a3520;
+  --burnt: #c4391c;
+  --burnt-dk: #8a2010;
+}
+
+body {
+  background: var(--bg);
+  color: var(--cream);
+  font-family: 'Barlow Condensed', sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 14px 48px;
+}
+
+.party-header {
+  width: 100%;
+  text-align: center;
+  padding: 24px 0 18px;
+  border-bottom: 1px solid rgba(200,169,110,0.1);
+  margin-bottom: 20px;
+}
+
+.party-eyebrow {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 13px;
+  color: var(--gold-dk);
+  letter-spacing: 0.1em;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.party-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 26px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--cream);
+  line-height: 1;
+}
+
+.party-sub {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold-xd);
+  margin-top: 7px;
+  display: block;
+}
+
+/* BINGO */
+.bingo-label {
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold-dk);
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.bingo-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 3px;
+  width: 100%;
+  max-width: 360px;
+  margin: 0 auto;
+}
+
+.bingo-cell {
+  background: rgba(200,169,110,0.04);
+  border: 1px solid rgba(200,169,110,0.1);
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--cream);
+  cursor: pointer;
+  padding: 3px;
+  line-height: 1.25;
+  border-radius: 2px;
+  transition: background 0.12s, border-color 0.12s;
+  -webkit-user-select: none;
+  user-select: none;
+  position: relative;
+}
+
+.bingo-cell.free {
+  background: rgba(196,57,28,0.15);
+  border-color: rgba(196,57,28,0.4);
+  color: var(--burnt);
+  font-size: 10px;
+  cursor: default;
+}
+
+.bingo-cell.marked {
+  background: rgba(196,57,28,0.2);
+  border-color: var(--burnt);
+}
+
+.bingo-cell.marked:not(.free)::after {
+  content: '';
+  position: absolute;
+  inset: 3px;
+  border: 1px solid rgba(196,57,28,0.5);
+  border-radius: 1px;
+  pointer-events: none;
+}
+
+.bingo-hint {
+  margin-top: 12px;
+  text-align: center;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold-xd);
+}
+
+/* WAITING */
+.waiting-wrap {
+  margin-top: 24px;
+  text-align: center;
+  width: 100%;
+}
+
+.waiting-line {
+  width: 40px;
+  height: 1px;
+  background: var(--gold-xd);
+  margin: 0 auto 16px;
+}
+
+.waiting-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 16px;
+  color: var(--gold-dk);
+  margin-bottom: 12px;
+}
+
+.dots { display: flex; justify-content: center; gap: 5px; }
+.dot-pulse {
+  width: 5px; height: 5px;
+  background: var(--burnt);
+  border-radius: 50%;
+  animation: dp 1.4s ease-in-out infinite;
+}
+.dot-pulse:nth-child(2) { animation-delay: 0.2s; }
+.dot-pulse:nth-child(3) { animation-delay: 0.4s; }
+@keyframes dp {
+  0%, 80%, 100% { opacity: 0.2; transform: scale(0.7); }
+  40% { opacity: 1; transform: scale(1); }
+}
+
+/* SUBMIT */
+.submit-wrap {
+  width: 100%;
+  max-width: 340px;
+  margin: 0 auto;
+  text-align: center;
+  padding-top: 8px;
+}
+
+.submit-eyebrow {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 14px;
+  color: var(--gold-dk);
+  letter-spacing: 0.08em;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.submit-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 30px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--cream);
+  line-height: 1;
+  margin-bottom: 24px;
+}
+
+.word-input {
+  width: 100%;
+  background: rgba(200,169,110,0.05);
+  border: 1px solid rgba(200,169,110,0.18);
+  border-radius: 2px;
+  padding: 18px 16px;
+  font-family: 'Playfair Display', serif;
+  font-size: 26px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--cream);
+  text-align: center;
+  outline: none;
+  margin-bottom: 12px;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.word-input:focus { border-color: rgba(200,169,110,0.35); }
+
+.word-input::placeholder {
+  color: rgba(200,169,110,0.18);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.btn-submit {
+  width: 100%;
+  background: var(--burnt);
+  color: var(--cream);
+  border: none;
+  padding: 17px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: background 0.15s;
+}
+
+.btn-submit:active { background: var(--burnt-dk); }
+.btn-submit:disabled { opacity: 0.45; cursor: default; }
+
+/* DONE */
+.done-wrap {
+  text-align: center;
+  padding: 60px 20px 40px;
+}
+
+.done-icon {
+  width: 56px; height: 56px;
+  border: 1px solid rgba(196,57,28,0.4);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px;
+  color: var(--burnt);
+  margin: 0 auto 24px;
+}
+
+.done-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 24px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--cream);
+  margin-bottom: 8px;
+}
+
+.done-sub {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 15px;
+  color: var(--gold-dk);
+}
+
+.hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<div class="party-header">
+  <span class="party-eyebrow">private listening session</span>
+  <div class="party-title">Looking for Love</div>
+  <span class="party-sub">Sia Amun</span>
+</div>
+
+<!-- PHASE: BINGO -->
+<div id="phase-bingo">
+  <p class="bingo-label">Tap a square when you hear or feel it</p>
+  <div class="bingo-grid" id="bingo-grid"></div>
+  <p class="bingo-hint">Tap again to unmark</p>
+
+  <div class="waiting-wrap">
+    <div class="waiting-line"></div>
+    <div class="waiting-text">Waiting for the session to begin</div>
+    <div class="dots">
+      <div class="dot-pulse"></div>
+      <div class="dot-pulse"></div>
+      <div class="dot-pulse"></div>
+    </div>
+  </div>
+</div>
+
+<!-- PHASE: SUBMIT -->
+<div id="phase-submit" class="hidden">
+  <div class="submit-wrap">
+    <span class="submit-eyebrow">after hearing it</span>
+    <div class="submit-title">First Word</div>
+    <input
+      type="text"
+      id="word-input"
+      class="word-input"
+      placeholder="YOUR WORD"
+      maxlength="24"
+      autocomplete="off"
+      autocorrect="off"
+      autocapitalize="characters"
+      spellcheck="false"
+    />
+    <button class="btn-submit" id="submit-btn" onclick="submitWord()">Submit</button>
+  </div>
+</div>
+
+<!-- PHASE: DONE -->
+<div id="phase-done" class="hidden">
+  <div class="done-wrap">
+    <div class="done-icon">&#10003;</div>
+    <div class="done-title">Word Received</div>
+    <div class="done-sub">Look up at the screen</div>
+  </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+<script>
+// ── FIREBASE CONFIG ─────────────────────────────────────────────────────────
+// Paste your Firebase config here (see SETUP.md)
+const firebaseConfig = {
+  apiKey: "PASTE_YOUR_API_KEY",
+  authDomain: "PASTE_YOUR_PROJECT_ID.firebaseapp.com",
+  databaseURL: "https://PASTE_YOUR_PROJECT_ID-default-rtdb.firebaseio.com",
+  projectId: "PASTE_YOUR_PROJECT_ID",
+  storageBucket: "PASTE_YOUR_PROJECT_ID.appspot.com",
+  messagingSenderId: "PASTE_YOUR_MESSAGING_SENDER_ID",
+  appId: "PASTE_YOUR_APP_ID"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+
+// ── BINGO ────────────────────────────────────────────────────────────────────
+const BINGO_WORDS = [
+  "THAT NOTE",   "KEY CHANGE",  "THE BRIDGE",  "AD LIB",      "BUILD UP",
+  "BASS DROP",   "THE SILENCE", "THE HOOK",    "THE OUTRO",   "GOOSEBUMPS",
+  "REPLAY THAT", "THE GROOVE",  "SOUL",        "VINTAGE",     "HEARTBREAK",
+  "LONGING",     "HARMONY",     "FALSETTO",    "LAYERS",      "BREAKDOWN",
+  "FELT THAT",   "THAT LINE",   "THE STRINGS", "SAID THAT",   "THE DROP",
+  "CLIMAX",      "THAT VIBE",   "CHILLS",      "RUN IT BACK", "YES"
+];
+
+// Persist guest ID so their card is always the same
+var guestId = localStorage.getItem('lfl_guest_id');
+if (!guestId) {
+  guestId = String(Math.floor(Math.random() * 89999) + 10000);
+  localStorage.setItem('lfl_guest_id', guestId);
+}
+
+function seededRand(n) {
+  var x = Math.sin(n + 1) * 10000;
+  return x - Math.floor(x);
+}
+
+function seededShuffle(arr, seed) {
+  var a = arr.slice();
+  for (var i = a.length - 1; i > 0; i--) {
+    var j = Math.floor(seededRand(seed * 31 + i * 17) * (i + 1));
+    var t = a[i]; a[i] = a[j]; a[j] = t;
+  }
+  return a;
+}
+
+var card = seededShuffle(BINGO_WORDS, parseInt(guestId)).slice(0, 24);
+card.splice(12, 0, 'FREE'); // center square
+
+var marked = JSON.parse(localStorage.getItem('lfl_marked') || '[]');
+
+function buildGrid() {
+  var grid = document.getElementById('bingo-grid');
+  grid.innerHTML = '';
+  card.forEach(function(word, i) {
+    var cell = document.createElement('div');
+    var isFree = word === 'FREE';
+    var isMarked = isFree || marked.includes(i);
+    cell.className = 'bingo-cell' + (isFree ? ' free' : '') + (isMarked ? ' marked' : '');
+    cell.textContent = word;
+    if (!isFree) {
+      cell.addEventListener('click', function() {
+        if (marked.includes(i)) {
+          marked = marked.filter(function(x) { return x !== i; });
+          cell.classList.remove('marked');
+        } else {
+          marked.push(i);
+          cell.classList.add('marked');
+        }
+        localStorage.setItem('lfl_marked', JSON.stringify(marked));
+      });
+    }
+    grid.appendChild(cell);
+  });
+}
+
+buildGrid();
+
+// ── PHASE LISTENER ───────────────────────────────────────────────────────────
+var hasSubmitted = localStorage.getItem('lfl_submitted') === 'true';
+
+function showPhase(phase) {
+  document.getElementById('phase-bingo').classList.toggle('hidden', phase !== 'bingo');
+  if (phase === 'submit') {
+    if (hasSubmitted) {
+      document.getElementById('phase-submit').classList.add('hidden');
+      document.getElementById('phase-done').classList.remove('hidden');
+    } else {
+      document.getElementById('phase-submit').classList.remove('hidden');
+      document.getElementById('phase-done').classList.add('hidden');
+    }
+  } else {
+    document.getElementById('phase-submit').classList.add('hidden');
+    document.getElementById('phase-done').classList.add('hidden');
+  }
+}
+
+db.ref('/session/phase').on('value', function(snap) {
+  showPhase(snap.val() || 'bingo');
+});
+
+// ── WORD SUBMISSION ──────────────────────────────────────────────────────────
+function submitWord() {
+  var input = document.getElementById('word-input');
+  var word = input.value.trim().toUpperCase().replace(/[^A-Z0-9 ']/g, '');
+  if (!word) { input.focus(); return; }
+
+  var btn = document.getElementById('submit-btn');
+  btn.disabled = true;
+  btn.textContent = 'Sending...';
+
+  db.ref('/session/words').push({
+    word: word,
+    guestId: guestId,
+    ts: Date.now()
+  }).then(function() {
+    hasSubmitted = true;
+    localStorage.setItem('lfl_submitted', 'true');
+    document.getElementById('phase-submit').classList.add('hidden');
+    document.getElementById('phase-done').classList.remove('hidden');
+  }).catch(function() {
+    btn.disabled = false;
+    btn.textContent = 'Submit';
+  });
+}
+
+document.getElementById('word-input').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') submitWord();
+});
+</script>
+</body>
+</html>

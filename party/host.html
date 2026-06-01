@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Looking for Love · Host Console</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&family=Barlow+Condensed:wght@400;600;700&family=Cormorant+Garamond:ital@1&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #0d0905;
+  --cream: #f2e8d9;
+  --gold: #c8a96e;
+  --gold-dk: #8a6a3a;
+  --gold-xd: #4a3520;
+  --burnt: #c4391c;
+}
+
+body {
+  background: var(--bg);
+  color: var(--cream);
+  font-family: 'Barlow Condensed', sans-serif;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ── HEADER ── */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 32px;
+  border-bottom: 1px solid rgba(200,169,110,0.08);
+  flex-shrink: 0;
+}
+
+.header-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 17px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--cream);
+}
+
+.header-sub {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 12px;
+  color: var(--gold-dk);
+  letter-spacing: 0.06em;
+  display: block;
+  margin-top: 2px;
+  text-transform: none;
+  font-weight: 400;
+}
+
+.header-count {
+  text-align: center;
+}
+
+.count-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 36px;
+  font-weight: 900;
+  color: var(--cream);
+  line-height: 1;
+  display: block;
+}
+
+.count-label {
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold-xd);
+  margin-top: 2px;
+  display: block;
+}
+
+/* ── LAYOUT ── */
+.body {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  overflow: hidden;
+}
+
+/* ── SIDEBAR ── */
+.sidebar {
+  border-right: 1px solid rgba(200,169,110,0.08);
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  overflow-y: auto;
+}
+
+.sidebar-section-label {
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold-xd);
+  margin-bottom: 10px;
+  display: block;
+}
+
+/* QR */
+.qr-block { text-align: center; }
+
+.qr-frame {
+  display: inline-block;
+  padding: 8px;
+  background: #fff;
+  border: 1px solid rgba(200,169,110,0.15);
+  border-radius: 2px;
+}
+
+.qr-frame img {
+  display: block;
+  width: 148px;
+  height: 148px;
+}
+
+.qr-url {
+  font-size: 8px;
+  letter-spacing: 0.06em;
+  color: var(--gold-xd);
+  margin-top: 8px;
+  word-break: break-all;
+  display: block;
+  line-height: 1.5;
+}
+
+/* Buttons */
+.btn-phase {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1px solid rgba(200,169,110,0.15);
+  background: transparent;
+  color: var(--gold-xd);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: all 0.15s;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.btn-phase:hover {
+  border-color: rgba(200,169,110,0.3);
+  color: var(--cream);
+}
+
+.btn-phase.active {
+  background: rgba(196,57,28,0.12);
+  border-color: rgba(196,57,28,0.5);
+  color: var(--cream);
+}
+
+.btn-icon { font-size: 14px; width: 18px; text-align: center; flex-shrink: 0; }
+
+.btn-danger {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid rgba(196,57,28,0.2);
+  background: transparent;
+  color: rgba(196,57,28,0.6);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: all 0.15s;
+  margin-top: 4px;
+}
+
+.btn-danger:hover { border-color: var(--burnt); color: var(--burnt); }
+
+/* ── CLOUD AREA ── */
+.cloud-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Waiting view */
+.view-waiting {
+  text-align: center;
+}
+
+.waiting-big {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(28px, 4vw, 52px);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--cream);
+  line-height: 1;
+  margin-bottom: 10px;
+}
+
+.waiting-italic {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: clamp(14px, 1.8vw, 20px);
+  color: var(--gold-dk);
+  margin-bottom: 32px;
+}
+
+.waiting-hint {
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold-xd);
+}
+
+/* Cloud view */
+.view-cloud {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.cloud-eyebrow {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 13px;
+  color: var(--gold-dk);
+  letter-spacing: 0.08em;
+  text-align: center;
+  margin-bottom: 20px;
+  flex-shrink: 0;
+}
+
+.word-cloud {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px 18px;
+  overflow: hidden;
+}
+
+.cloud-word {
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  transition: font-size 0.5s ease, opacity 0.5s ease;
+  animation: wordIn 0.4s ease forwards;
+}
+
+@keyframes wordIn {
+  from { opacity: 0; transform: scale(0.7); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.cloud-empty {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 20px;
+  color: var(--gold-xd);
+  text-align: center;
+}
+
+/* Divider in sidebar */
+.sidebar-divider {
+  height: 1px;
+  background: rgba(200,169,110,0.08);
+}
+
+.hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <div class="header-title">Looking for Love</div>
+    <span class="header-sub">Private Listening Session &nbsp;·&nbsp; Host Console</span>
+  </div>
+  <div class="header-count">
+    <span class="count-num" id="word-count">0</span>
+    <span class="count-label">Reactions</span>
+  </div>
+</div>
+
+<div class="body">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+
+    <div class="qr-block">
+      <span class="sidebar-section-label">Guest Link &mdash; Scan to Join</span>
+      <div class="qr-frame">
+        <img id="qr-img" src="" alt="QR Code" />
+      </div>
+      <span class="qr-url" id="qr-url-text"></span>
+    </div>
+
+    <div class="sidebar-divider"></div>
+
+    <div>
+      <span class="sidebar-section-label">Session Controls</span>
+      <button class="btn-phase active" id="btn-bingo" onclick="setPhase('bingo')">
+        <span class="btn-icon">&#9783;</span> Bingo Cards
+      </button>
+      <button class="btn-phase" id="btn-submit" onclick="setPhase('submit')">
+        <span class="btn-icon">&#9679;</span> Collect Reactions
+      </button>
+    </div>
+
+    <div>
+      <span class="sidebar-section-label">Reset</span>
+      <button class="btn-danger" onclick="clearWords()">&#8635; Clear All Words</button>
+    </div>
+
+  </div>
+
+  <!-- MAIN DISPLAY -->
+  <div class="cloud-area">
+
+    <!-- Waiting / Bingo phase -->
+    <div id="view-waiting" class="view-waiting">
+      <div class="waiting-big">Looking for Love</div>
+      <div class="waiting-italic">Private Listening Session &mdash; Sia Amun</div>
+      <div class="waiting-hint">Guests are reviewing their bingo cards</div>
+    </div>
+
+    <!-- Word cloud phase -->
+    <div id="view-cloud" class="view-cloud hidden">
+      <div class="cloud-eyebrow">First word reactions &mdash; live</div>
+      <div class="word-cloud" id="word-cloud">
+        <div class="cloud-empty" id="cloud-empty">Waiting for the first reaction&hellip;</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+<script>
+// ── FIREBASE CONFIG ──────────────────────────────────────────────────────────
+// Paste your Firebase config here (same values as guest.html)
+const firebaseConfig = {
+  apiKey: "PASTE_YOUR_API_KEY",
+  authDomain: "PASTE_YOUR_PROJECT_ID.firebaseapp.com",
+  databaseURL: "https://PASTE_YOUR_PROJECT_ID-default-rtdb.firebaseio.com",
+  projectId: "PASTE_YOUR_PROJECT_ID",
+  storageBucket: "PASTE_YOUR_PROJECT_ID.appspot.com",
+  messagingSenderId: "PASTE_YOUR_MESSAGING_SENDER_ID",
+  appId: "PASTE_YOUR_APP_ID"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+
+// ── QR CODE ──────────────────────────────────────────────────────────────────
+var guestUrl = window.location.origin + '/party/guest.html';
+document.getElementById('qr-url-text').textContent = guestUrl;
+document.getElementById('qr-img').src =
+  'https://api.qrserver.com/v1/create-qr-code/?size=148x148&color=000000&bgcolor=ffffff&data=' +
+  encodeURIComponent(guestUrl);
+
+// ── PHASE CONTROL ────────────────────────────────────────────────────────────
+function setPhase(phase) {
+  db.ref('/session/phase').set(phase);
+
+  document.getElementById('btn-bingo').classList.toggle('active', phase === 'bingo');
+  document.getElementById('btn-submit').classList.toggle('active', phase === 'submit');
+  document.getElementById('view-waiting').classList.toggle('hidden', phase !== 'bingo');
+  document.getElementById('view-cloud').classList.toggle('hidden', phase !== 'submit');
+}
+
+db.ref('/session/phase').once('value', function(snap) {
+  setPhase(snap.val() || 'bingo');
+});
+
+// ── WORD CLOUD ────────────────────────────────────────────────────────────────
+var wordCounts = {};
+
+// Word colors — cycled by word hash for variety
+var COLORS = ['#f2e8d9', '#c8a96e', '#c4391c', '#e2cfa0', '#d4956a'];
+
+function wordColor(word) {
+  var n = word.split('').reduce(function(a, c) { return a + c.charCodeAt(0); }, 0);
+  return COLORS[n % COLORS.length];
+}
+
+db.ref('/session/words').on('value', function(snap) {
+  wordCounts = {};
+  var total = 0;
+
+  snap.forEach(function(child) {
+    var w = String(child.val().word || '').toUpperCase().trim();
+    if (w) { wordCounts[w] = (wordCounts[w] || 0) + 1; total++; }
+  });
+
+  document.getElementById('word-count').textContent = total;
+  renderCloud();
+});
+
+function renderCloud() {
+  var cloud = document.getElementById('word-cloud');
+  var empty = document.getElementById('cloud-empty');
+  var words = Object.keys(wordCounts);
+
+  if (!words.length) {
+    empty.style.display = '';
+    cloud.querySelectorAll('.cloud-word').forEach(function(el) { el.remove(); });
+    return;
+  }
+
+  empty.style.display = 'none';
+  var maxCount = Math.max.apply(null, Object.values(wordCounts));
+
+  words.forEach(function(word) {
+    var count = wordCounts[word];
+    // Scale: 1 occurrence = 18px, max = 80px
+    var size = 18 + Math.round((count / maxCount) * 62);
+    var existing = cloud.querySelector('[data-word="' + CSS.escape(word) + '"]');
+
+    if (existing) {
+      existing.style.fontSize = size + 'px';
+    } else {
+      var el = document.createElement('div');
+      el.className = 'cloud-word';
+      el.setAttribute('data-word', word);
+      el.textContent = word;
+      el.style.fontSize = size + 'px';
+      el.style.color = wordColor(word);
+      cloud.appendChild(el);
+    }
+  });
+}
+
+// ── CLEAR ─────────────────────────────────────────────────────────────────────
+function clearWords() {
+  if (!confirm('Clear all submitted words? This cannot be undone.')) return;
+  db.ref('/session/words').remove();
+}
+</script>
+</body>
+</html>
