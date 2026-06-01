@@ -1308,15 +1308,19 @@ footer {
       </a>
     </div>
 
-    <div style="border-top:1px solid rgba(200,169,110,0.1); padding-top:20px; display:flex; flex-direction:column; gap:10px;">
-      <div style="font-family:'Barlow Condensed',sans-serif; font-size:10px; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; color:var(--gold-dk); margin-bottom:4px;">Leave a Message</div>
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
-        <input class="modal-input" type="text" placeholder="Full Name" style="margin-bottom:0;" />
-        <input class="modal-input" type="email" placeholder="Email Address" style="margin-bottom:0;" />
-      </div>
-      <input class="modal-input" type="tel" placeholder="Phone Number" style="margin-bottom:0;" />
-      <textarea class="modal-input" placeholder="Your message to Sia..." style="min-height:90px; resize:vertical; margin-bottom:0;"></textarea>
-      <button class="modal-btn" onclick="closeDonateModal()">Done</button>
+    <div style="border-top:1px solid rgba(200,169,110,0.1); padding-top:20px;">
+      <div style="font-family:'Barlow Condensed',sans-serif; font-size:10px; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; color:var(--gold-dk); margin-bottom:12px;">Leave a Message</div>
+      <form id="support-form" action="https://formspree.io/f/mqewqodg" method="POST" style="display:flex; flex-direction:column; gap:10px;">
+        <input type="hidden" name="_subject" value="Support Message from siaamun.com" />
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+          <input class="modal-input" type="text" name="name" placeholder="Full Name" style="margin-bottom:0;" required />
+          <input class="modal-input" type="email" name="email" placeholder="Email Address" style="margin-bottom:0;" required />
+        </div>
+        <input class="modal-input" type="tel" name="phone" placeholder="Phone Number" style="margin-bottom:0;" />
+        <textarea class="modal-input" name="message" placeholder="Your message to Sia..." style="min-height:90px; resize:vertical; margin-bottom:0;" required></textarea>
+        <button type="submit" class="modal-btn" id="support-submit-btn">Send Message</button>
+        <div id="support-success" style="display:none; text-align:center; font-family:'Cormorant Garamond',serif; font-style:italic; font-size:15px; color:var(--gold-dk); padding:8px 0;">Message sent. Thank you &#9829;</div>
+      </form>
     </div>
   </div>
 </div>
@@ -1477,7 +1481,30 @@ footer {
   document.querySelectorAll('.anim').forEach(el => observer.observe(el));
 
 function openDonateModal() { document.getElementById('donateModal').classList.add('open'); }
-function closeDonateModal() { document.getElementById('donateModal').classList.remove('open'); }
+function closeDonateModal() {
+  document.getElementById('donateModal').classList.remove('open');
+  document.getElementById('support-form').reset();
+  document.getElementById('support-success').style.display = 'none';
+  document.getElementById('support-submit-btn').style.display = '';
+}
+document.getElementById('support-form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  var btn = document.getElementById('support-submit-btn');
+  btn.textContent = 'Sending...';
+  btn.disabled = true;
+  fetch(this.action, { method: 'POST', body: new FormData(this), headers: { 'Accept': 'application/json' } })
+    .then(function(r) {
+      if (r.ok) {
+        document.getElementById('support-success').style.display = 'block';
+        document.getElementById('support-submit-btn').style.display = 'none';
+        document.getElementById('support-form').reset();
+      } else {
+        btn.textContent = 'Send Message';
+        btn.disabled = false;
+      }
+    })
+    .catch(function() { btn.textContent = 'Send Message'; btn.disabled = false; });
+});
 document.getElementById('donateModal').addEventListener('click', function(e) {
   if (e.target === this) closeDonateModal();
 });
