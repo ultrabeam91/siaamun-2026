@@ -127,7 +127,7 @@ body {
   content: '';
   position: absolute;
   inset: 3px;
-  border: 1px solid rgba(196,57,28,0.5);
+  border: 1px solid rgba(196,57,28,0.45);
   border-radius: 1px;
   pointer-events: none;
 }
@@ -149,8 +149,7 @@ body {
 }
 
 .waiting-line {
-  width: 40px;
-  height: 1px;
+  width: 40px; height: 1px;
   background: var(--gold-xd);
   margin: 0 auto 16px;
 }
@@ -174,7 +173,7 @@ body {
 .dot-pulse:nth-child(3) { animation-delay: 0.4s; }
 @keyframes dp {
   0%, 80%, 100% { opacity: 0.2; transform: scale(0.7); }
-  40% { opacity: 1; transform: scale(1); }
+  40%            { opacity: 1;   transform: scale(1);   }
 }
 
 /* SUBMIT */
@@ -223,7 +222,6 @@ body {
   outline: none;
   margin-bottom: 12px;
   -webkit-appearance: none;
-  appearance: none;
 }
 
 .word-input:focus { border-color: rgba(200,169,110,0.35); }
@@ -234,7 +232,6 @@ body {
   font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.18em;
-  text-transform: uppercase;
 }
 
 .btn-submit {
@@ -253,7 +250,7 @@ body {
   transition: background 0.15s;
 }
 
-.btn-submit:active { background: var(--burnt-dk); }
+.btn-submit:active  { background: var(--burnt-dk); }
 .btn-submit:disabled { opacity: 0.45; cursor: default; }
 
 /* DONE */
@@ -305,7 +302,6 @@ body {
   <p class="bingo-label">Tap a square when you hear or feel it</p>
   <div class="bingo-grid" id="bingo-grid"></div>
   <p class="bingo-hint">Tap again to unmark</p>
-
   <div class="waiting-wrap">
     <div class="waiting-line"></div>
     <div class="waiting-text">Waiting for the session to begin</div>
@@ -346,25 +342,9 @@ body {
   </div>
 </div>
 
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
 <script>
-// ── FIREBASE CONFIG ─────────────────────────────────────────────────────────
-// Paste your Firebase config here (see SETUP.md)
-const firebaseConfig = {
-  apiKey: "PASTE_YOUR_API_KEY",
-  authDomain: "PASTE_YOUR_PROJECT_ID.firebaseapp.com",
-  databaseURL: "https://PASTE_YOUR_PROJECT_ID-default-rtdb.firebaseio.com",
-  projectId: "PASTE_YOUR_PROJECT_ID",
-  storageBucket: "PASTE_YOUR_PROJECT_ID.appspot.com",
-  messagingSenderId: "PASTE_YOUR_MESSAGING_SENDER_ID",
-  appId: "PASTE_YOUR_APP_ID"
-};
-firebase.initializeApp(firebaseConfig);
-const db = firebase.database();
-
-// ── BINGO ────────────────────────────────────────────────────────────────────
-const BINGO_WORDS = [
+// ── BINGO ─────────────────────────────────────────────────────────────────────
+var BINGO_WORDS = [
   "THAT NOTE",   "KEY CHANGE",  "THE BRIDGE",  "AD LIB",      "BUILD UP",
   "BASS DROP",   "THE SILENCE", "THE HOOK",    "THE OUTRO",   "GOOSEBUMPS",
   "REPLAY THAT", "THE GROOVE",  "SOUL",        "VINTAGE",     "HEARTBREAK",
@@ -373,7 +353,6 @@ const BINGO_WORDS = [
   "CLIMAX",      "THAT VIBE",   "CHILLS",      "RUN IT BACK", "YES"
 ];
 
-// Persist guest ID so their card is always the same
 var guestId = localStorage.getItem('lfl_guest_id');
 if (!guestId) {
   guestId = String(Math.floor(Math.random() * 89999) + 10000);
@@ -384,7 +363,6 @@ function seededRand(n) {
   var x = Math.sin(n + 1) * 10000;
   return x - Math.floor(x);
 }
-
 function seededShuffle(arr, seed) {
   var a = arr.slice();
   for (var i = a.length - 1; i > 0; i--) {
@@ -395,17 +373,16 @@ function seededShuffle(arr, seed) {
 }
 
 var card = seededShuffle(BINGO_WORDS, parseInt(guestId)).slice(0, 24);
-card.splice(12, 0, 'FREE'); // center square
-
+card.splice(12, 0, 'FREE');
 var marked = JSON.parse(localStorage.getItem('lfl_marked') || '[]');
 
 function buildGrid() {
   var grid = document.getElementById('bingo-grid');
   grid.innerHTML = '';
   card.forEach(function(word, i) {
-    var cell = document.createElement('div');
-    var isFree = word === 'FREE';
+    var isFree   = word === 'FREE';
     var isMarked = isFree || marked.includes(i);
+    var cell = document.createElement('div');
     cell.className = 'bingo-cell' + (isFree ? ' free' : '') + (isMarked ? ' marked' : '');
     cell.textContent = word;
     if (!isFree) {
@@ -423,53 +400,58 @@ function buildGrid() {
     grid.appendChild(cell);
   });
 }
-
 buildGrid();
 
-// ── PHASE LISTENER ───────────────────────────────────────────────────────────
-var hasSubmitted = localStorage.getItem('lfl_submitted') === 'true';
+// ── PHASE POLLING ────────────────────────────────────────────────────────────
+var currentPhase = 'bingo';
+var hasSubmitted  = localStorage.getItem('lfl_submitted') === 'true';
 
 function showPhase(phase) {
+  if (phase === currentPhase) return;
+  currentPhase = phase;
   document.getElementById('phase-bingo').classList.toggle('hidden', phase !== 'bingo');
   if (phase === 'submit') {
-    if (hasSubmitted) {
-      document.getElementById('phase-submit').classList.add('hidden');
-      document.getElementById('phase-done').classList.remove('hidden');
-    } else {
-      document.getElementById('phase-submit').classList.remove('hidden');
-      document.getElementById('phase-done').classList.add('hidden');
-    }
+    document.getElementById('phase-submit').classList.toggle('hidden', hasSubmitted);
+    document.getElementById('phase-done').classList.toggle('hidden', !hasSubmitted);
   } else {
     document.getElementById('phase-submit').classList.add('hidden');
     document.getElementById('phase-done').classList.add('hidden');
   }
 }
 
-db.ref('/session/phase').on('value', function(snap) {
-  showPhase(snap.val() || 'bingo');
-});
+function pollPhase() {
+  fetch('/api/status')
+    .then(function(r) { return r.json(); })
+    .then(function(data) { showPhase(data.phase); })
+    .catch(function() {});
+}
+
+setInterval(pollPhase, 2000);
+pollPhase();
 
 // ── WORD SUBMISSION ──────────────────────────────────────────────────────────
 function submitWord() {
   var input = document.getElementById('word-input');
-  var word = input.value.trim().toUpperCase().replace(/[^A-Z0-9 ']/g, '');
+  var word  = input.value.trim().toUpperCase().replace(/[^A-Z0-9 ']/g, '');
   if (!word) { input.focus(); return; }
 
   var btn = document.getElementById('submit-btn');
-  btn.disabled = true;
+  btn.disabled    = true;
   btn.textContent = 'Sending...';
 
-  db.ref('/session/words').push({
-    word: word,
-    guestId: guestId,
-    ts: Date.now()
-  }).then(function() {
+  fetch('/api/word', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ word: word, guestId: guestId })
+  })
+  .then(function() {
     hasSubmitted = true;
     localStorage.setItem('lfl_submitted', 'true');
     document.getElementById('phase-submit').classList.add('hidden');
     document.getElementById('phase-done').classList.remove('hidden');
-  }).catch(function() {
-    btn.disabled = false;
+  })
+  .catch(function() {
+    btn.disabled    = false;
     btn.textContent = 'Submit';
   });
 }

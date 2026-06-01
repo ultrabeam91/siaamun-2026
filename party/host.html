@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Looking for Love · Host Console</title>
+<title>Looking for Love · Host</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&family=Barlow+Condensed:wght@400;600;700&family=Cormorant+Garamond:ital@1&display=swap" rel="stylesheet">
 <style>
@@ -33,14 +33,14 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 32px;
+  padding: 14px 28px;
   border-bottom: 1px solid rgba(200,169,110,0.08);
   flex-shrink: 0;
 }
 
 .header-title {
   font-family: 'Playfair Display', serif;
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 900;
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -50,96 +50,81 @@ body {
 .header-sub {
   font-family: 'Cormorant Garamond', serif;
   font-style: italic;
-  font-size: 12px;
+  font-size: 11px;
   color: var(--gold-dk);
-  letter-spacing: 0.06em;
   display: block;
   margin-top: 2px;
-  text-transform: none;
-  font-weight: 400;
 }
 
-.header-count {
-  text-align: center;
-}
-
+.header-count { text-align: center; }
 .count-num {
   font-family: 'Playfair Display', serif;
-  font-size: 36px;
+  font-size: 32px;
   font-weight: 900;
   color: var(--cream);
   line-height: 1;
   display: block;
 }
-
 .count-label {
   font-size: 9px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--gold-xd);
-  margin-top: 2px;
   display: block;
+  margin-top: 1px;
 }
 
 /* ── LAYOUT ── */
 .body {
   flex: 1;
   display: grid;
-  grid-template-columns: 240px 1fr;
+  grid-template-columns: 220px 1fr;
   overflow: hidden;
 }
 
 /* ── SIDEBAR ── */
 .sidebar {
   border-right: 1px solid rgba(200,169,110,0.08);
-  padding: 24px 20px;
+  padding: 20px 16px;
   display: flex;
   flex-direction: column;
-  gap: 28px;
+  gap: 22px;
   overflow-y: auto;
 }
 
-.sidebar-section-label {
+.sidebar-label {
   font-size: 9px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--gold-xd);
-  margin-bottom: 10px;
+  margin-bottom: 8px;
   display: block;
 }
 
-/* QR */
 .qr-block { text-align: center; }
 
 .qr-frame {
   display: inline-block;
-  padding: 8px;
+  padding: 7px;
   background: #fff;
-  border: 1px solid rgba(200,169,110,0.15);
+  border: 1px solid rgba(200,169,110,0.12);
   border-radius: 2px;
 }
-
-.qr-frame img {
-  display: block;
-  width: 148px;
-  height: 148px;
-}
-
+.qr-frame img { display: block; width: 136px; height: 136px; }
 .qr-url {
   font-size: 8px;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.05em;
   color: var(--gold-xd);
-  margin-top: 8px;
+  margin-top: 7px;
   word-break: break-all;
-  display: block;
   line-height: 1.5;
+  display: block;
 }
 
-/* Buttons */
 .btn-phase {
   width: 100%;
-  padding: 11px 14px;
-  border: 1px solid rgba(200,169,110,0.15);
+  padding: 10px 12px;
+  border: 1px solid rgba(200,169,110,0.14);
   background: transparent;
   color: var(--gold-xd);
   font-family: 'Barlow Condensed', sans-serif;
@@ -153,29 +138,23 @@ body {
   text-align: left;
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 6px;
+  gap: 9px;
+  margin-bottom: 5px;
 }
-
-.btn-phase:hover {
-  border-color: rgba(200,169,110,0.3);
-  color: var(--cream);
-}
-
+.btn-phase:hover { border-color: rgba(200,169,110,0.3); color: var(--cream); }
 .btn-phase.active {
   background: rgba(196,57,28,0.12);
-  border-color: rgba(196,57,28,0.5);
+  border-color: rgba(196,57,28,0.45);
   color: var(--cream);
 }
-
-.btn-icon { font-size: 14px; width: 18px; text-align: center; flex-shrink: 0; }
+.btn-icon { font-size: 13px; width: 16px; text-align: center; flex-shrink: 0; }
 
 .btn-danger {
   width: 100%;
-  padding: 10px 14px;
-  border: 1px solid rgba(196,57,28,0.2);
+  padding: 9px 12px;
+  border: 1px solid rgba(196,57,28,0.18);
   background: transparent;
-  color: rgba(196,57,28,0.6);
+  color: rgba(196,57,28,0.5);
   font-family: 'Barlow Condensed', sans-serif;
   font-size: 10px;
   font-weight: 700;
@@ -184,30 +163,28 @@ body {
   cursor: pointer;
   border-radius: 2px;
   transition: all 0.15s;
-  margin-top: 4px;
+  margin-top: 2px;
 }
-
 .btn-danger:hover { border-color: var(--burnt); color: var(--burnt); }
 
-/* ── CLOUD AREA ── */
-.cloud-area {
+.sidebar-divider { height: 1px; background: rgba(200,169,110,0.07); }
+
+/* ── MAIN DISPLAY ── */
+.display {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 40px;
   overflow: hidden;
-  position: relative;
 }
 
 /* Waiting view */
-.view-waiting {
-  text-align: center;
-}
+.view-waiting { text-align: center; }
 
 .waiting-big {
   font-family: 'Playfair Display', serif;
-  font-size: clamp(28px, 4vw, 52px);
+  font-size: clamp(28px, 4vw, 56px);
   font-weight: 900;
   text-transform: uppercase;
   letter-spacing: 0.06em;
@@ -215,15 +192,13 @@ body {
   line-height: 1;
   margin-bottom: 10px;
 }
-
 .waiting-italic {
   font-family: 'Cormorant Garamond', serif;
   font-style: italic;
-  font-size: clamp(14px, 1.8vw, 20px);
+  font-size: clamp(14px, 1.8vw, 22px);
   color: var(--gold-dk);
-  margin-bottom: 32px;
+  margin-bottom: 28px;
 }
-
 .waiting-hint {
   font-size: 11px;
   letter-spacing: 0.14em;
@@ -256,7 +231,7 @@ body {
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  gap: 10px 18px;
+  gap: 10px 20px;
   overflow: hidden;
 }
 
@@ -266,13 +241,12 @@ body {
   text-transform: uppercase;
   letter-spacing: 0.04em;
   line-height: 1;
-  transition: font-size 0.5s ease, opacity 0.5s ease;
+  transition: font-size 0.5s ease;
   animation: wordIn 0.4s ease forwards;
 }
-
 @keyframes wordIn {
-  from { opacity: 0; transform: scale(0.7); }
-  to   { opacity: 1; transform: scale(1); }
+  from { opacity: 0; transform: scale(0.6); }
+  to   { opacity: 1; transform: scale(1);   }
 }
 
 .cloud-empty {
@@ -283,12 +257,6 @@ body {
   text-align: center;
 }
 
-/* Divider in sidebar */
-.sidebar-divider {
-  height: 1px;
-  background: rgba(200,169,110,0.08);
-}
-
 .hidden { display: none !important; }
 </style>
 </head>
@@ -297,7 +265,7 @@ body {
 <div class="header">
   <div>
     <div class="header-title">Looking for Love</div>
-    <span class="header-sub">Private Listening Session &nbsp;·&nbsp; Host Console</span>
+    <span class="header-sub">Private Listening Session &nbsp;&middot;&nbsp; Host</span>
   </div>
   <div class="header-count">
     <span class="count-num" id="word-count">0</span>
@@ -306,14 +274,13 @@ body {
 </div>
 
 <div class="body">
-
   <!-- SIDEBAR -->
   <div class="sidebar">
 
     <div class="qr-block">
-      <span class="sidebar-section-label">Guest Link &mdash; Scan to Join</span>
+      <span class="sidebar-label">Scan to Join</span>
       <div class="qr-frame">
-        <img id="qr-img" src="" alt="QR Code" />
+        <img id="qr-img" src="" alt="QR" />
       </div>
       <span class="qr-url" id="qr-url-text"></span>
     </div>
@@ -321,9 +288,9 @@ body {
     <div class="sidebar-divider"></div>
 
     <div>
-      <span class="sidebar-section-label">Session Controls</span>
+      <span class="sidebar-label">Controls</span>
       <button class="btn-phase active" id="btn-bingo" onclick="setPhase('bingo')">
-        <span class="btn-icon">&#9783;</span> Bingo Cards
+        <span class="btn-icon">&#9783;</span> Show Bingo Cards
       </button>
       <button class="btn-phase" id="btn-submit" onclick="setPhase('submit')">
         <span class="btn-icon">&#9679;</span> Collect Reactions
@@ -331,25 +298,23 @@ body {
     </div>
 
     <div>
-      <span class="sidebar-section-label">Reset</span>
-      <button class="btn-danger" onclick="clearWords()">&#8635; Clear All Words</button>
+      <span class="sidebar-label">Reset</span>
+      <button class="btn-danger" onclick="clearWords()">&#8635;&nbsp; Clear All Words</button>
     </div>
 
   </div>
 
-  <!-- MAIN DISPLAY -->
-  <div class="cloud-area">
+  <!-- DISPLAY -->
+  <div class="display">
 
-    <!-- Waiting / Bingo phase -->
     <div id="view-waiting" class="view-waiting">
       <div class="waiting-big">Looking for Love</div>
       <div class="waiting-italic">Private Listening Session &mdash; Sia Amun</div>
       <div class="waiting-hint">Guests are reviewing their bingo cards</div>
     </div>
 
-    <!-- Word cloud phase -->
     <div id="view-cloud" class="view-cloud hidden">
-      <div class="cloud-eyebrow">First word reactions &mdash; live</div>
+      <div class="cloud-eyebrow">first word reactions &mdash; live</div>
       <div class="word-cloud" id="word-cloud">
         <div class="cloud-empty" id="cloud-empty">Waiting for the first reaction&hellip;</div>
       </div>
@@ -358,72 +323,70 @@ body {
   </div>
 </div>
 
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
 <script>
-// ── FIREBASE CONFIG ──────────────────────────────────────────────────────────
-// Paste your Firebase config here (same values as guest.html)
-const firebaseConfig = {
-  apiKey: "PASTE_YOUR_API_KEY",
-  authDomain: "PASTE_YOUR_PROJECT_ID.firebaseapp.com",
-  databaseURL: "https://PASTE_YOUR_PROJECT_ID-default-rtdb.firebaseio.com",
-  projectId: "PASTE_YOUR_PROJECT_ID",
-  storageBucket: "PASTE_YOUR_PROJECT_ID.appspot.com",
-  messagingSenderId: "PASTE_YOUR_MESSAGING_SENDER_ID",
-  appId: "PASTE_YOUR_APP_ID"
-};
-firebase.initializeApp(firebaseConfig);
-const db = firebase.database();
+// ── QR CODE ───────────────────────────────────────────────────────────────────
+var guestUrl = '';
 
-// ── QR CODE ──────────────────────────────────────────────────────────────────
-var guestUrl = window.location.origin + '/party/guest.html';
-document.getElementById('qr-url-text').textContent = guestUrl;
-document.getElementById('qr-img').src =
-  'https://api.qrserver.com/v1/create-qr-code/?size=148x148&color=000000&bgcolor=ffffff&data=' +
-  encodeURIComponent(guestUrl);
+fetch('/api/info')
+  .then(function(r) { return r.json(); })
+  .then(function(data) {
+    guestUrl = data.guestUrl;
+    document.getElementById('qr-url-text').textContent = guestUrl;
+    document.getElementById('qr-img').src =
+      'https://api.qrserver.com/v1/create-qr-code/?size=136x136&color=000000&bgcolor=ffffff&data=' +
+      encodeURIComponent(guestUrl);
+  });
 
-// ── PHASE CONTROL ────────────────────────────────────────────────────────────
+// ── PHASE CONTROL ─────────────────────────────────────────────────────────────
+var currentPhase = 'bingo';
+
 function setPhase(phase) {
-  db.ref('/session/phase').set(phase);
+  fetch('/api/phase', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ phase: phase })
+  });
 
+  currentPhase = phase;
   document.getElementById('btn-bingo').classList.toggle('active', phase === 'bingo');
   document.getElementById('btn-submit').classList.toggle('active', phase === 'submit');
   document.getElementById('view-waiting').classList.toggle('hidden', phase !== 'bingo');
   document.getElementById('view-cloud').classList.toggle('hidden', phase !== 'submit');
 }
 
-db.ref('/session/phase').once('value', function(snap) {
-  setPhase(snap.val() || 'bingo');
-});
-
-// ── WORD CLOUD ────────────────────────────────────────────────────────────────
-var wordCounts = {};
-
-// Word colors — cycled by word hash for variety
+// ── WORD CLOUD POLLING ────────────────────────────────────────────────────────
 var COLORS = ['#f2e8d9', '#c8a96e', '#c4391c', '#e2cfa0', '#d4956a'];
+var lastUpdate = 0;
 
 function wordColor(word) {
   var n = word.split('').reduce(function(a, c) { return a + c.charCodeAt(0); }, 0);
   return COLORS[n % COLORS.length];
 }
 
-db.ref('/session/words').on('value', function(snap) {
-  wordCounts = {};
-  var total = 0;
+function pollWords() {
+  fetch('/api/words')
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (data.lastUpdate === lastUpdate) return;
+      lastUpdate = data.lastUpdate;
 
-  snap.forEach(function(child) {
-    var w = String(child.val().word || '').toUpperCase().trim();
-    if (w) { wordCounts[w] = (wordCounts[w] || 0) + 1; total++; }
-  });
+      // Build word frequency map
+      var counts = {};
+      data.words.forEach(function(entry) {
+        var w = entry.word;
+        counts[w] = (counts[w] || 0) + 1;
+      });
 
-  document.getElementById('word-count').textContent = total;
-  renderCloud();
-});
+      document.getElementById('word-count').textContent = data.words.length;
+      renderCloud(counts);
+    })
+    .catch(function() {});
+}
 
-function renderCloud() {
+function renderCloud(counts) {
   var cloud = document.getElementById('word-cloud');
   var empty = document.getElementById('cloud-empty');
-  var words = Object.keys(wordCounts);
+  var words = Object.keys(counts);
 
   if (!words.length) {
     empty.style.display = '';
@@ -432,14 +395,11 @@ function renderCloud() {
   }
 
   empty.style.display = 'none';
-  var maxCount = Math.max.apply(null, Object.values(wordCounts));
+  var maxCount = Math.max.apply(null, Object.values(counts));
 
   words.forEach(function(word) {
-    var count = wordCounts[word];
-    // Scale: 1 occurrence = 18px, max = 80px
-    var size = 18 + Math.round((count / maxCount) * 62);
-    var existing = cloud.querySelector('[data-word="' + CSS.escape(word) + '"]');
-
+    var size = 18 + Math.round((counts[word] / maxCount) * 68);
+    var existing = cloud.querySelector('[data-word="' + word.replace(/"/g, '') + '"]');
     if (existing) {
       existing.style.fontSize = size + 'px';
     } else {
@@ -454,10 +414,18 @@ function renderCloud() {
   });
 }
 
+setInterval(pollWords, 1500);
+pollWords();
+
 // ── CLEAR ─────────────────────────────────────────────────────────────────────
 function clearWords() {
-  if (!confirm('Clear all submitted words? This cannot be undone.')) return;
-  db.ref('/session/words').remove();
+  if (!confirm('Clear all submitted words?')) return;
+  fetch('/api/clear', { method: 'POST' }).then(function() {
+    document.getElementById('word-count').textContent = '0';
+    document.getElementById('word-cloud').querySelectorAll('.cloud-word').forEach(function(el) { el.remove(); });
+    document.getElementById('cloud-empty').style.display = '';
+    lastUpdate = 0;
+  });
 }
 </script>
 </body>
